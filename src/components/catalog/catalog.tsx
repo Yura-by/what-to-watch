@@ -1,5 +1,7 @@
 import * as React from 'react';
+// import SmallMovieCard from '../small-movie-card/small-movie-card';
 import {Movie} from '../../types';
+import MoviesList from '../movies-list/movies-list';
 
 interface Props {
   movies: Movie[];
@@ -45,28 +47,10 @@ const Catalog: React.FunctionComponent<Props> = (props: Props) => {
         </li>
       </ul>
 
-      <div className="catalog__movies-list">
-
-        {movies.map((it) => {
-          return (
-            <article className="small-movie-card catalog__movies-card" key={it.id}>
-              <div className="small-movie-card__image">
-                <img src={it.previewImage} alt={it.name} width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a
-                  className="small-movie-card__link"
-                  href="movie-page.html"
-                  onClick={(evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-                    evt.preventDefault();
-                    onCardClick(it.id);
-                  }}
-                >{it.name}</a>
-              </h3>
-            </article>
-          );
-        })}
-      </div>
+      <MoviesList
+        movies={movies}
+        onCardClick={onCardClick}
+      />
 
       <div className="catalog__more">
         <button className="catalog__button" type="button">Show more</button>
