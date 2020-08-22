@@ -10,6 +10,7 @@ interface Props {
 
 interface State {
   hoverMovie: number;
+  timerId: NodeJS.Timeout
 }
 
 export default class MoviesList extends React.PureComponent<Props, State> {
@@ -18,7 +19,8 @@ export default class MoviesList extends React.PureComponent<Props, State> {
     super(props);
 
     this.state = {
-      hoverMovie: null
+      hoverMovie: null,
+      timerId: null,
     };
 
     this._hoverCardHandler = this._hoverCardHandler.bind(this);
@@ -26,12 +28,20 @@ export default class MoviesList extends React.PureComponent<Props, State> {
   }
 
   private _hoverCardHandler(id: number): void {
+    const timer = setInterval(() => {
+      this.setState({
+        hoverMovie: id,
+      });
+    }, 1000);
     this.setState({
-      hoverMovie: id
+      timerId: timer
     });
   }
 
   private _leaveCardHandler(): void {
+    if (this.state.timerId) {
+      clearTimeout(this.state.timerId)
+    }
     this.setState({
       hoverMovie: null
     });
@@ -41,7 +51,7 @@ export default class MoviesList extends React.PureComponent<Props, State> {
     const {movies, onCardClick} = this.props;
     return (
       <div className="catalog__movies-list">
-        {movies.map((it) => {
+        {movies.map((it, index) => {
           return (
             <SmallMovieCard
               movie={it}
@@ -49,6 +59,7 @@ export default class MoviesList extends React.PureComponent<Props, State> {
               onCardHover={this._hoverCardHandler}
               onCardLeave={this._leaveCardHandler}
               key={it.id}
+              isPlayVideo={this.state.hoverMovie === index}
             />
           );
         })}
