@@ -8,7 +8,7 @@ import Catalog from '../catalog/catalog';
 
 interface Props {
   allMovies: Movie[];
-  onSelectMovie: (id: number) => void;
+  onSelectMovie: (movie: Movie) => void;
 }
 
 const PageMain: React.FunctionComponent<Props> = (props: Props) => {

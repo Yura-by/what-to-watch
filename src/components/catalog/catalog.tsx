@@ -5,7 +5,7 @@ import MoviesList from '../movies-list/movies-list';
 
 interface Props {
   movies: Movie[];
-  onCardClick: (id: number) => void;
+  onCardClick: (movie: Movie) => void;
 }
 
 const Catalog: React.FunctionComponent<Props> = (props: Props) => {

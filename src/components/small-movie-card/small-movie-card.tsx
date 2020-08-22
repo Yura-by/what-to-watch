@@ -4,7 +4,7 @@ import {Movie} from '../../types';
 
 interface Props {
   movie: Movie;
-  onCardClick: (id: number) => void;
+  onCardClick: (movie: Movie) => void;
   onCardHover: (id: number) => void;
   onCardLeave: () => void;
   isPlayVideo: boolean;
@@ -31,7 +31,7 @@ const SmallMovieCard: React.FunctionComponent<Props> = (props: Props) => {
           href="movie-page.html"
           onClick={(evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             evt.preventDefault();
-            onCardClick(movie.id);
+            onCardClick(movie);
           }}
         >{movie.name}</a>
       </h3>
