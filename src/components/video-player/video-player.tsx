@@ -1,6 +1,13 @@
 import * as React from 'react';
 import {Movie} from '../../types';
 
+const formatTime = (time: number): string => {
+  if (time / 10 > 1) {
+    return `${time}`;
+  }
+  return `0${time}`;
+}
+
 interface Props {
   movie: Movie;
   onExitPlayer: () => void;
@@ -10,7 +17,6 @@ interface State {
   isPlaying: boolean;
   currentTime: number;
   percentsVideo: number;
-  durationTime: number;
 }
 
 export default class VideoPlayer extends React.PureComponent<Props, State> {
@@ -26,10 +32,10 @@ export default class VideoPlayer extends React.PureComponent<Props, State> {
       isPlaying: false,
       currentTime: 0,
       percentsVideo: 0,
-      durationTime: 0
     }
 
     this._startButtonClickHandler = this._startButtonClickHandler.bind(this);
+    this._progressClickHandler = this._progressClickHandler.bind(this);
   }
 
   _startButtonClickHandler() {
@@ -40,13 +46,21 @@ export default class VideoPlayer extends React.PureComponent<Props, State> {
     })
   }
 
+  _progressClickHandler(evt: React.MouseEvent<HTMLProgressElement, MouseEvent>) {
+    const video: HTMLVideoElement = this._videoRef.current;
+    const width: number = this._progressRef.current.offsetWidth;
+    const point: number = evt.nativeEvent.offsetX;
+    video.pause();
+    video.currentTime = this._videoRef.current.duration * point / width;
+    video.play();
+  }
+
   render() {
     const {movie, onExitPlayer} = this.props;
-    const duration = this.state.durationTime;
-    console.log(duration)
-    const hours = Math.floor(duration / 600);
-    const minutes = Math.floor(duration % 600);
-    const seconds = Math.floor(duration % 36000);
+    const {currentTime} = this.state;
+    const hours: string = formatTime(Math.floor(currentTime / 3600));
+    const minutes: string = formatTime(Math.floor(currentTime / 60)- (Number(hours) * 60));
+    const seconds: string = formatTime(Math.floor(currentTime % 60));
     const {percentsVideo} = this.state;
     return (
       <div className="player">
@@ -69,14 +83,7 @@ export default class VideoPlayer extends React.PureComponent<Props, State> {
             <div className="player__time">
               <progress className="player__progress" value={percentsVideo} max="100"
                 ref={this._progressRef}
-                onClick={(evt) => {
-                  const width = this._progressRef.current.offsetWidth;
-                  console.log(evt.clientX)
-                  console.log(event)
-                  console.log(evt)
-                  console.log(width)
-                  console.log(this._progressRef)
-                }}
+                onClick={this._progressClickHandler}
               ></progress>
               <div className="player__toggler" style={{left: `${percentsVideo}%`}}>Toggler</div>
             </div>
@@ -121,20 +128,21 @@ export default class VideoPlayer extends React.PureComponent<Props, State> {
   }
 
   componentDidMount() {
-    const video = this._videoRef.current;
-    video.oncanplaythrough = () => {
-      this.setState({
-        durationTime: video.duration
-      })
-    }
+    const video: HTMLVideoElement = this._videoRef.current;
 
     video.ontimeupdate = () => {
-      console.log(video.currentTime)
-      console.log(video.duration)
       const percentsVideo = video.currentTime / video.duration * 100;
       this.setState({
-        percentsVideo: percentsVideo
+        percentsVideo: percentsVideo,
+        currentTime: video.currentTime
       })
     }
+  }
+
+  componentWillUnmount() {
+    const video: HTMLVideoElement = this._videoRef.current;
+
+    video.src = ``;
+    video.ontimeupdate = null;
   }
 }
