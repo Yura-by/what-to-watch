@@ -15,7 +15,9 @@ const PageMain: React.FunctionComponent<Props> = (props: Props) => {
   const {allMovies, onSelectMovie} = props;
   return (
     <React.Fragment>
-      <MovieCard />
+      <MovieCard
+        movie={allMovies[0]}
+      />
       <PageContent>
         <Catalog
           movies={allMovies}

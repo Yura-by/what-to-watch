@@ -19,6 +19,10 @@ const SmallMovieCard: React.FunctionComponent<Props> = (props: Props) => {
         onCardHover(movie.id);
       }}
       onMouseLeave={onCardLeave}
+      onClick={(evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        evt.preventDefault();
+        onCardClick(movie);
+      }}
     >
       <div className="small-movie-card__image">
         {isPlayVideo ? <video src={movie.previewVideoLink} width="280" height="175" poster={movie.posterImage} muted autoPlay></video>
@@ -29,10 +33,6 @@ const SmallMovieCard: React.FunctionComponent<Props> = (props: Props) => {
         <a
           className="small-movie-card__link"
           href="movie-page.html"
-          onClick={(evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-            evt.preventDefault();
-            onCardClick(movie);
-          }}
         >{movie.name}</a>
       </h3>
     </article>
