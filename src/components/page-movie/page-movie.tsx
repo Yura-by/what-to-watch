@@ -4,11 +4,14 @@ import {Movie} from '../../types';
 import Header from '../header/header';
 import MoviCardButtons from '../movie-card-buttons/movie-card-buttons';
 import MovieCardDesc from '../movie-card-desc/movie-card-desc';
+import PageContent from '../page-content/page-content';
+import CatalogLikeThis from '../catalog-like-this/catalog-like-this';
 
 interface Props {
   movie: Movie;
   movies: Movie[];
   onMoviePlay: () => void;
+  onSelectMovie: (movie: Movie) => void;
 }
 
 export default class PageMovie extends React.PureComponent<Props, {}> {
@@ -18,47 +21,56 @@ export default class PageMovie extends React.PureComponent<Props, {}> {
   }
 
   render() {
-    const {movie, onMoviePlay} = this.props;
+    const {movie, onMoviePlay, movies} = this.props;
     return (
-      <section className="movie-card movie-card--full">
-        <div className="movie-card__hero">
-          <div className="movie-card__bg">
-            <img src={movie.backgroundImage} alt={movie.name} />
+      <React.Fragment>
+        <section className="movie-card movie-card--full">
+          <div className="movie-card__hero">
+            <div className="movie-card__bg">
+              <img src={movie.backgroundImage} alt={movie.name} />
+            </div>
+
+            <h1 className="visually-hidden">WTW</h1>
+
+            <Header />
+
+            <div className="movie-card__wrap">
+              <div className="movie-card__desc">
+                <h2 className="movie-card__title">{movie.name}</h2>
+                <p className="movie-card__meta">
+                  <span className="movie-card__genre">{movie.genre}</span>
+                  <span className="movie-card__year">{movie.released}</span>
+                </p>
+
+                <MoviCardButtons
+                  onPlay={onMoviePlay}
+                >
+                  <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                </MoviCardButtons>
+
+              </div>
+            </div>
           </div>
 
-          <h1 className="visually-hidden">WTW</h1>
+          <div className="movie-card__wrap movie-card__translate-top">
+            <div className="movie-card__info">
+              <div className="movie-card__poster movie-card__poster--big">
+                <img src={movie.posterImage} alt={movie.name} width="218" height="327" />
+              </div>
 
-          <Header />
-
-          <div className="movie-card__wrap">
-            <div className="movie-card__desc">
-              <h2 className="movie-card__title">{movie.name}</h2>
-              <p className="movie-card__meta">
-                <span className="movie-card__genre">{movie.genre}</span>
-                <span className="movie-card__year">{movie.released}</span>
-              </p>
-
-              <MoviCardButtons
-                onPlay={onMoviePlay}
-              >
-                <a href="add-review.html" className="btn movie-card__button">Add review</a>
-              </MoviCardButtons>
+              <MovieCardDesc movie={movie}/>
 
             </div>
           </div>
-        </div>
+        </section>
+        <PageContent>
+          <CatalogLikeThis
+            movies={movies}
+            onCardClick={this.props.onSelectMovie}
+          />
+        </PageContent>
+      </React.Fragment>
 
-        <div className="movie-card__wrap movie-card__translate-top">
-          <div className="movie-card__info">
-            <div className="movie-card__poster movie-card__poster--big">
-              <img src={movie.posterImage} alt={movie.name} width="218" height="327" />
-            </div>
-
-            <MovieCardDesc movie={movie}/>
-
-          </div>
-        </div>
-      </section>
     );
   }
 }

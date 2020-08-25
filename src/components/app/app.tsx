@@ -44,6 +44,9 @@ export default class App extends React.PureComponent<{}, State> {
             };
           });
         }}
+        onSelectMovie={(movie: Movie): void => {
+          this.setState({selectedFilm: movie});
+        }}
       />;
     }
 
