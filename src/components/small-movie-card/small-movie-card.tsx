@@ -26,7 +26,7 @@ const SmallMovieCard: React.FunctionComponent<Props> = (props: Props) => {
     >
       <div className="small-movie-card__image">
         {isPlayVideo ? <video src={movie.previewVideoLink} width="280" height="175" poster={movie.posterImage} muted autoPlay></video>
-        : <img src={movie.previewImage} alt={movie.name} width="280" height="175" />}
+          : <img src={movie.previewImage} alt={movie.name} width="280" height="175" />}
 
       </div>
       <h3 className="small-movie-card__title">

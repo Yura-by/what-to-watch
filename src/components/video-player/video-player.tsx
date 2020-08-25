@@ -2,11 +2,11 @@ import * as React from 'react';
 import {Movie} from '../../types';
 
 const formatTime = (time: number): string => {
-  if (time / 10 > 1) {
+  if (time / 10 >= 1) {
     return `${time}`;
   }
   return `0${time}`;
-}
+};
 
 interface Props {
   movie: Movie;
@@ -32,7 +32,7 @@ export default class VideoPlayer extends React.PureComponent<Props, State> {
       isPlaying: false,
       currentTime: 0,
       percentsVideo: 0,
-    }
+    };
 
     this._startButtonClickHandler = this._startButtonClickHandler.bind(this);
     this._progressClickHandler = this._progressClickHandler.bind(this);
@@ -42,8 +42,8 @@ export default class VideoPlayer extends React.PureComponent<Props, State> {
     this.setState((prevState) => {
       return {
         isPlaying: !prevState.isPlaying
-      }
-    })
+      };
+    });
   }
 
   _progressClickHandler(evt: React.MouseEvent<HTMLProgressElement, MouseEvent>) {
@@ -59,7 +59,7 @@ export default class VideoPlayer extends React.PureComponent<Props, State> {
     const {movie, onExitPlayer} = this.props;
     const {currentTime} = this.state;
     const hours: string = formatTime(Math.floor(currentTime / 3600));
-    const minutes: string = formatTime(Math.floor(currentTime / 60)- (Number(hours) * 60));
+    const minutes: string = formatTime(Math.floor(currentTime / 60) - (Number(hours) * 60));
     const seconds: string = formatTime(Math.floor(currentTime % 60));
     const {percentsVideo} = this.state;
     return (
@@ -133,10 +133,10 @@ export default class VideoPlayer extends React.PureComponent<Props, State> {
     video.ontimeupdate = () => {
       const percentsVideo = video.currentTime / video.duration * 100;
       this.setState({
-        percentsVideo: percentsVideo,
+        percentsVideo,
         currentTime: video.currentTime
-      })
-    }
+      });
+    };
   }
 
   componentWillUnmount() {

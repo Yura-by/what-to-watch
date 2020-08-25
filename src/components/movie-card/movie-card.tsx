@@ -1,6 +1,9 @@
 import * as React from 'react';
 import {Movie} from '../../types';
 
+import Header from '../header/header';
+import MoviCardButtons from '../movie-card-buttons/movie-card-buttons';
+
 interface Props {
   movie: Movie;
 }
@@ -15,21 +18,7 @@ const MovieCard: React.FunctionComponent<Props> = (props: Props) => {
 
       <h1 className="visually-hidden">WTW</h1>
 
-      <header className="page-header movie-card__head">
-        <div className="logo">
-          <a className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <div className="movie-card__wrap">
         <div className="movie-card__info">
@@ -43,21 +32,11 @@ const MovieCard: React.FunctionComponent<Props> = (props: Props) => {
               <span className="movie-card__genre">{movie.genre}</span>
               <span className="movie-card__year">{movie.released}</span>
             </p>
-
-            <div className="movie-card__buttons">
-              <button className="btn btn--play movie-card__button" type="button">
-                <svg viewBox="0 0 19 19" width="19" height="19">
-                  <use xlinkHref="#play-s"></use>
-                </svg>
-                <span>Play</span>
-              </button>
-              <button className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-              </button>
-            </div>
+            <MoviCardButtons
+              onPlay={() => {
+                event.preventDefault();
+              }}
+            />
           </div>
         </div>
       </div>

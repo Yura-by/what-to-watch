@@ -40,7 +40,7 @@ export default class MoviesList extends React.PureComponent<Props, State> {
 
   private _leaveCardHandler(): void {
     if (this.state.timerId) {
-      clearTimeout(this.state.timerId)
+      clearTimeout(this.state.timerId);
     }
     this.setState({
       hoverMovie: null
@@ -69,7 +69,7 @@ export default class MoviesList extends React.PureComponent<Props, State> {
 
   componentWillUnmount() {
     if (this.state.timerId) {
-      clearTimeout(this.state.timerId)
+      clearTimeout(this.state.timerId);
     }
   }
 }

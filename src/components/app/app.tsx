@@ -1,12 +1,15 @@
 import * as React from 'react';
-import PageMain from '../page-main/page-main';
-import VideoPlayer from '../video-player/video-player';
 import {Movie} from '../../types';
 
 import {Movies} from '../../mock/movies';
 
+import PageMain from '../page-main/page-main';
+import VideoPlayer from '../video-player/video-player';
+import PageMovie from '../page-movie/page-movie';
+
 interface State {
   playingFilm: Movie;
+  selectedFilm: Movie;
 }
 
 export default class App extends React.PureComponent<{}, State> {
@@ -14,8 +17,9 @@ export default class App extends React.PureComponent<{}, State> {
     super(props);
 
     this.state = {
-      playingFilm: null
-    }
+      playingFilm: null,
+      selectedFilm: null,
+    };
   }
 
   render() {
@@ -23,16 +27,31 @@ export default class App extends React.PureComponent<{}, State> {
       return <VideoPlayer
         movie={this.state.playingFilm}
         onExitPlayer={() => {
-          this.setState({playingFilm: null})
+          this.setState({playingFilm: null});
+          this.setState({selectedFilm: null});
         }}
-      />
+      />;
+    }
+
+    if (this.state.selectedFilm) {
+      return <PageMovie
+        movie={this.state.selectedFilm}
+        movies={Movies}
+        onMoviePlay={() => {
+          this.setState((prevState) => {
+            return {
+              playingFilm: prevState.selectedFilm
+            };
+          });
+        }}
+      />;
     }
 
     return <PageMain
       allMovies={Movies}
       onSelectMovie={(movie: Movie): void => {
-        this.setState({playingFilm: movie});
+        this.setState({selectedFilm: movie});
       }}
-    />
+    />;
   }
 }

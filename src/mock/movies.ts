@@ -43,7 +43,7 @@ const Movies: Movie[] = [
     backgroundColor: `#977461`,
     backgroundImage: `https://htmlacademy-react-3.appspot.com/wtw/static/film/background/Shutter_Island.jpg`,
     description: `In 1954, a U,.S. Marshal investigates the disappearance of a murderer, who escaped from a h,ospital for the criminally insane.`,
-    director: `Martin Scorsese,`,
+    director: `Martin Scorsese`,
     genre: `Thriller`,
     id: 3,
     isFavorite: false,
