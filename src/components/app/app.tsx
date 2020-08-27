@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {Movie} from '../../types';
 
-import {Movies} from '../../mock/movies';
-
 import PageMain from '../page-main/page-main';
 import VideoPlayer from '../video-player/video-player';
 import PageMovie from '../page-movie/page-movie';
@@ -12,8 +10,12 @@ interface State {
   selectedFilm: Movie;
 }
 
-export default class App extends React.PureComponent<{}, State> {
-  constructor(props) {
+interface Props {
+  movies: Movie[]
+}
+
+export default class App extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -36,7 +38,7 @@ export default class App extends React.PureComponent<{}, State> {
     if (this.state.selectedFilm) {
       return <PageMovie
         movie={this.state.selectedFilm}
-        movies={Movies}
+        movies={this.props.movies}
         onMoviePlay={() => {
           this.setState((prevState) => {
             return {
@@ -51,7 +53,7 @@ export default class App extends React.PureComponent<{}, State> {
     }
 
     return <PageMain
-      allMovies={Movies}
+      allMovies={this.props.movies}
       onSelectMovie={(movie: Movie): void => {
         this.setState({selectedFilm: movie});
       }}

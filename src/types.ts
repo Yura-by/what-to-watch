@@ -17,3 +17,13 @@ export interface Movie {
   starring: string[];
   videoLink: string
 }
+
+export interface Action {
+  type: string;
+  payload: any;
+}
+
+export interface Store {
+  allMovies: Movie[];
+  genre: string;
+}
