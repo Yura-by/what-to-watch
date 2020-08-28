@@ -11,7 +11,7 @@ interface State {
 }
 
 interface Props {
-  movies: Movie[]
+  movies: Movie[];
 }
 
 export default class App extends React.PureComponent<Props, State> {

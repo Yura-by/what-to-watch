@@ -17,5 +17,7 @@ it(`Correct data fall in state`, () => {
   const fourthFilm = movies.at(3);
 
   fourthFilm.simulate(`mouseenter`);
-  expect(tree.state().hoverMovie).toEqual(4);
+  setTimeout(() => {
+    expect(tree.state().hoverMovie).toEqual(4);
+  }, 2000);
 });

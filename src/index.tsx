@@ -12,8 +12,8 @@ import App from './components/app/app';
 import {reducer} from './reducer/reducer';
 
 const store = createStore(
-  reducer,
-  composeWithDevTools()
+    reducer,
+    composeWithDevTools()
 );
 
 store.dispatch(ActionCreator.setMovies(Movies));

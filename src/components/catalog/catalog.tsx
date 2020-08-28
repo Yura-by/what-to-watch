@@ -15,7 +15,7 @@ interface Props {
 }
 
 interface State {
-  moviesCount: number
+  moviesCount: number;
 }
 
 class Catalog extends React.PureComponent<Props, State> {
@@ -25,7 +25,7 @@ class Catalog extends React.PureComponent<Props, State> {
 
     this.state = {
       moviesCount: Count.START
-    }
+    };
 
     this._moreButtonClickHandler = this._moreButtonClickHandler.bind(this);
   }
@@ -34,8 +34,8 @@ class Catalog extends React.PureComponent<Props, State> {
     this.setState((prevState) => {
       return {
         moviesCount: prevState.moviesCount + Count.ADD
-      }
-    })
+      };
+    });
   }
 
 
@@ -60,8 +60,8 @@ class Catalog extends React.PureComponent<Props, State> {
         <div className="catalog__more">
           {moviesLength === movies.length ? ``
             : <button className="catalog__button" type="button"
-            onClick={this._moreButtonClickHandler}
-          >Show more</button>
+              onClick={this._moreButtonClickHandler}
+            >Show more</button>
           }
         </div>
       </section>
@@ -72,7 +72,7 @@ class Catalog extends React.PureComponent<Props, State> {
 const mapStateToProps = (state: Store) => {
   return {
     movies: getMoviesByType(state)
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(Catalog);
