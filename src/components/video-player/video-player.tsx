@@ -36,6 +36,7 @@ export default class VideoPlayer extends React.PureComponent<Props, State> {
 
     this._startButtonClickHandler = this._startButtonClickHandler.bind(this);
     this._progressClickHandler = this._progressClickHandler.bind(this);
+    this._videoOntimeupdateHandler = this._videoOntimeupdateHandler.bind(this);
   }
 
   _startButtonClickHandler() {
@@ -106,7 +107,11 @@ export default class VideoPlayer extends React.PureComponent<Props, State> {
             </button>
             <div className="player__name">Transpotting</div>
 
-            <button type="button" className="player__full-screen">
+            <button type="button" className="player__full-screen"
+              onClick={() => {
+                this._videoRef.current.requestFullscreen();
+              }}
+            >
               <svg viewBox="0 0 27 27" width="27" height="27">
                 <use xlinkHref="#full-screen"></use>
               </svg>
@@ -127,16 +132,30 @@ export default class VideoPlayer extends React.PureComponent<Props, State> {
     }
   }
 
+  private _videoOntimeupdateHandler() {
+    const video: HTMLVideoElement = this._videoRef.current;
+    const percentsVideo = video.currentTime / video.duration * 100;
+    this.setState({
+      percentsVideo,
+      currentTime: video.currentTime
+    });
+  }
+
   componentDidMount() {
     const video: HTMLVideoElement = this._videoRef.current;
+    document.onfullscreenchange = () => {
+      if (document.fullscreenElement) {
+        video.ontimeupdate = null;
+      } else {
+        video.ontimeupdate = this._videoOntimeupdateHandler;
+      }
 
-    video.ontimeupdate = () => {
-      const percentsVideo = video.currentTime / video.duration * 100;
       this.setState({
-        percentsVideo,
-        currentTime: video.currentTime
-      });
-    };
+        isPlaying: !video.paused
+      })
+    }
+
+    video.ontimeupdate = this._videoOntimeupdateHandler;
   }
 
   componentWillUnmount() {
