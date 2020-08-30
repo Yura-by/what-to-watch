@@ -2,8 +2,12 @@ import * as React from 'react';
 import {Movie} from '../../types';
 
 import PageMain from '../page-main/page-main';
-import VideoPlayer from '../video-player/video-player';
 import PageMovie from '../page-movie/page-movie';
+import Player from '../player/player';
+
+import withVideoPlayer from '../../hocs/with-video-player/with-video-player';
+
+const PlayerWrapped = withVideoPlayer(Player);
 
 interface State {
   playingFilm: Movie;
@@ -26,13 +30,14 @@ export default class App extends React.PureComponent<Props, State> {
 
   render() {
     if (this.state.playingFilm) {
-      return <VideoPlayer
+
+      return <PlayerWrapped
         movie={this.state.playingFilm}
         onExitPlayer={() => {
           this.setState({playingFilm: null});
           this.setState({selectedFilm: null});
         }}
-      />;
+      />
     }
 
     if (this.state.selectedFilm) {
