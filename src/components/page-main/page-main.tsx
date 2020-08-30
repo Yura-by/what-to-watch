@@ -5,6 +5,9 @@ import {Movie} from '../../types';
 import MovieCard from '../../components/movie-card/movie-card';
 import PageContent from '../page-content/page-content';
 import Catalog from '../catalog/catalog';
+import withMoreButton from '../../hocs/with-more-button/with-more-button';
+
+const CatalogWrapped = withMoreButton(Catalog);
 
 interface Props {
   allMovies: Movie[];
@@ -19,8 +22,7 @@ const PageMain: React.FunctionComponent<Props> = (props: Props) => {
         movie={allMovies[0]}
       />
       <PageContent>
-        <Catalog
-          movies={allMovies}
+        <CatalogWrapped
           onCardClick={onSelectMovie}
         />
       </PageContent>
