@@ -16,7 +16,9 @@ const Video = React.forwardRef((props: Props, ref: React.RefObject<HTMLVideoElem
       poster={poster}
     >
     </video>
-  )
+  );
 });
+
+Video.displayName = `Video`;
 
 export default Video;

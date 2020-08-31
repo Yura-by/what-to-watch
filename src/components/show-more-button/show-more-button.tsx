@@ -10,6 +10,6 @@ const ShowMoreButton: React.FunctionComponent<Props> = (props: Props) => {
       onClick={props.onShowMoreClick}
     >Show more</button>
   );
-}
+};
 
 export default ShowMoreButton;

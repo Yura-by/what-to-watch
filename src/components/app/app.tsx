@@ -37,7 +37,7 @@ export default class App extends React.PureComponent<Props, State> {
           this.setState({playingFilm: null});
           this.setState({selectedFilm: null});
         }}
-      />
+      />;
     }
 
     if (this.state.selectedFilm) {

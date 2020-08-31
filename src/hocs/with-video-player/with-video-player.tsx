@@ -81,8 +81,8 @@ const withVideoPlayer = (Component) => {
 
         this.setState({
           isPlaying: !video.paused
-        })
-      }
+        });
+      };
 
       video.ontimeupdate = this._videoOntimeupdateHandler;
     }

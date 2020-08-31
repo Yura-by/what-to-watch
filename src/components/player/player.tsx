@@ -21,70 +21,70 @@ const formatTime = (time: number): string => {
 
 const Player: React.FunctionComponent<Props> = (props: Props) => {
 
-    const {
-      onExitPlayer,
-      percentsVideo,
-      progressRef,
-      onProgressClick,
-      currentTime,
-      onStartButtonClick,
-      isPlaying,
-      onFullscreenClick
-    } = props;
+  const {
+    onExitPlayer,
+    percentsVideo,
+    progressRef,
+    onProgressClick,
+    currentTime,
+    onStartButtonClick,
+    isPlaying,
+    onFullscreenClick
+  } = props;
 
-    const hours: string = formatTime(Math.floor(currentTime / 3600));
-    const minutes: string = formatTime(Math.floor(currentTime / 60) - (Number(hours) * 60));
-    const seconds: string = formatTime(Math.floor(currentTime % 60));
-    return (
-      <div className="player">
-        {props.children}
+  const hours: string = formatTime(Math.floor(currentTime / 3600));
+  const minutes: string = formatTime(Math.floor(currentTime / 60) - (Number(hours) * 60));
+  const seconds: string = formatTime(Math.floor(currentTime % 60));
+  return (
+    <div className="player">
+      {props.children}
 
-        <button
-          onClick={onExitPlayer}
-          type="button"
-          className="player__exit"
-        >Exit</button>
+      <button
+        onClick={onExitPlayer}
+        type="button"
+        className="player__exit"
+      >Exit</button>
 
-        <div className="player__controls">
-          <div className="player__controls-row">
-            <div className="player__time">
-              <progress className="player__progress" value={percentsVideo} max="100"
-                ref={progressRef}
-                onClick={onProgressClick}
-              ></progress>
-              <div className="player__toggler" style={{left: `${percentsVideo}%`}}>Toggler</div>
-            </div>
-            <div className="player__time-value">{`${hours}:${minutes}:${seconds}`}</div>
+      <div className="player__controls">
+        <div className="player__controls-row">
+          <div className="player__time">
+            <progress className="player__progress" value={percentsVideo} max="100"
+              ref={progressRef}
+              onClick={onProgressClick}
+            ></progress>
+            <div className="player__toggler" style={{left: `${percentsVideo}%`}}>Toggler</div>
           </div>
+          <div className="player__time-value">{`${hours}:${minutes}:${seconds}`}</div>
+        </div>
 
-          <div className="player__controls-row">
-            <button type="button" className="player__play"
-              onClick={onStartButtonClick}
-            >
-              {isPlaying
-                ? <svg viewBox="0 0 14 21" width="14" height="21">
-                  <use xlinkHref="#pause"></use>
-                </svg>
-                : <svg viewBox="0 0 19 19" width="19" height="19">
-                  <use xlinkHref="#play-s"></use>
-                </svg>
-              }
-              <span>Play</span>
-            </button>
-            <div className="player__name">Transpotting</div>
-
-            <button type="button" className="player__full-screen"
-              onClick={onFullscreenClick}
-            >
-              <svg viewBox="0 0 27 27" width="27" height="27">
-                <use xlinkHref="#full-screen"></use>
+        <div className="player__controls-row">
+          <button type="button" className="player__play"
+            onClick={onStartButtonClick}
+          >
+            {isPlaying
+              ? <svg viewBox="0 0 14 21" width="14" height="21">
+                <use xlinkHref="#pause"></use>
               </svg>
-              <span>Full screen</span>
-            </button>
-          </div>
+              : <svg viewBox="0 0 19 19" width="19" height="19">
+                <use xlinkHref="#play-s"></use>
+              </svg>
+            }
+            <span>Play</span>
+          </button>
+          <div className="player__name">Transpotting</div>
+
+          <button type="button" className="player__full-screen"
+            onClick={onFullscreenClick}
+          >
+            <svg viewBox="0 0 27 27" width="27" height="27">
+              <use xlinkHref="#full-screen"></use>
+            </svg>
+            <span>Full screen</span>
+          </button>
         </div>
       </div>
-    );
+    </div>
+  );
 };
 
 export default Player;

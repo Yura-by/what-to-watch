@@ -52,18 +52,18 @@ const withMoreButton = (Component) => {
         moviesLength = movies.length;
       }
       const moviesByCount = movies.slice(0, moviesLength);
-        return (
-          <Component
-            {...this.props}
-            movies={moviesByCount}
-          >
-            {moviesLength === movies.length ? ``
-              : <ShowMoreButton
+      return (
+        <Component
+          {...this.props}
+          movies={moviesByCount}
+        >
+          {moviesLength === movies.length ? ``
+            : <ShowMoreButton
               onShowMoreClick={this._moreButtonClickHandler}
             />
-            }
-          </Component>
-        );
+          }
+        </Component>
+      );
     }
   }
 
@@ -75,6 +75,6 @@ const withMoreButton = (Component) => {
   };
 
   return connect(mapStateToProps)(WithMoreButton);
-}
+};
 
 export default withMoreButton;
