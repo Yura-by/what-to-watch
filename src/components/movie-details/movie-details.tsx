@@ -7,8 +7,8 @@ interface Props {
 
 const MovieDetails: React.FunctionComponent<Props> = (props: Props) => {
   const {movie} = props;
-  const hours: number = Math.floor(movie.runTime / 3600);
-  const minutes: number = Math.floor(movie.runTime / 60) - hours * 60;
+  const hours: number = Math.floor(movie.runTime / 60);
+  const minutes: number = Math.floor(movie.runTime % 60);
   return (
     <div className="movie-card__text movie-card__row">
       <div className="movie-card__text-col">

@@ -1,4 +1,7 @@
 import * as React from 'react';
+import {connect} from 'react-redux';
+
+import {ActionCreator} from '../../reducer/app-state/app-state';
 
 import {Movie} from '../../types';
 
@@ -8,10 +11,11 @@ interface Props {
   onCardHover: (id: number) => void;
   onCardLeave: () => void;
   isPlayVideo: boolean;
+  onMovieClick: (id: number) => void;
 }
 
 const SmallMovieCard: React.FunctionComponent<Props> = (props: Props) => {
-  const {movie, onCardClick, onCardHover, onCardLeave, isPlayVideo} = props;
+  const {movie, onCardClick, onCardHover, onCardLeave, isPlayVideo, onMovieClick} = props;
   return (
     <article
       className="small-movie-card catalog__movies-card"
@@ -22,6 +26,7 @@ const SmallMovieCard: React.FunctionComponent<Props> = (props: Props) => {
       onClick={(evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         evt.preventDefault();
         onCardClick(movie);
+        onMovieClick(movie.id);
       }}
     >
       <div className="small-movie-card__image">
@@ -39,4 +44,12 @@ const SmallMovieCard: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-export default SmallMovieCard;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onMovieClick: (id: number) => {
+      dispatch(ActionCreator.setSelectedMovie(id));
+    }
+  }
+};
+
+export default connect(null, mapDispatchToProps)(SmallMovieCard);

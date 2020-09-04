@@ -1,4 +1,7 @@
 import * as React from 'react';
+import {connect} from 'react-redux';
+
+import {Operation} from '../../reducer/data/data';
 
 import {Navigation} from '../../const';
 import {Movie} from '../../types';
@@ -14,9 +17,10 @@ interface State {
 
 interface Props {
   movie: Movie;
+  onReviewsClick: (id: number) => void;
 }
 
-export default class MovieCardDesc extends React.PureComponent<Props, State> {
+class MovieCardDesc extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -25,6 +29,7 @@ export default class MovieCardDesc extends React.PureComponent<Props, State> {
     };
 
     this._getScreen = this._getScreen.bind(this);
+    this._navigationClickHandler = this._navigationClickHandler.bind(this);
   }
 
   private _getScreen() {
@@ -40,7 +45,16 @@ export default class MovieCardDesc extends React.PureComponent<Props, State> {
     }
 
     return null;
+  }
 
+  private _navigationClickHandler(name: Navigation) {
+    const {onReviewsClick} = this.props;
+    if (name === Navigation.reviews) {
+      onReviewsClick(this.props.movie.id);
+    }
+    this.setState({
+      navigation: name
+    });
   }
 
   render() {
@@ -48,11 +62,7 @@ export default class MovieCardDesc extends React.PureComponent<Props, State> {
       <div className="movie-card__desc">
         <Navigator
           activeNav={this.state.navigation}
-          onNavClick={(name: Navigation) => {
-            this.setState({
-              navigation: name
-            });
-          }}
+          onNavClick={this._navigationClickHandler}
         />
         {this._getScreen()}
 
@@ -61,3 +71,13 @@ export default class MovieCardDesc extends React.PureComponent<Props, State> {
 
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onReviewsClick: (id: number) => {
+      dispatch(Operation.loadComments(id));
+    }
+  }
+};
+
+export default connect(null, mapDispatchToProps)(MovieCardDesc);

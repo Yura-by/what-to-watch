@@ -1,48 +1,12 @@
-import {Movie, Action, Store} from '../types';
-import {Genre} from '../const';
+import {combineReducers} from 'redux';
 
-enum ActionType {
-  SET_MOVIES = `SET_MOVIES`,
-  SET_GENRE = `SET_GENRE`,
-}
+import {NameSpace} from '../reducer/name-space';
+import {reducer as data} from './data/data';
+import {reducer as user} from './user/user';
+import {reducer as app} from './app-state/app-state';
 
-const initialState: Store = {
-  allMovies: null,
-  genre: Genre.ALL_GENRES
-};
-
-const ActionCreator = {
-  setMovies: (movies: Movie[]): Action => {
-    return {
-      type: ActionType.SET_MOVIES,
-      payload: movies
-    };
-  },
-
-  setGenre: (genre: string): Action => {
-    return {
-      type: ActionType.SET_GENRE,
-      payload: genre
-    }
-  }
-};
-
-const reducer = (state: Store = initialState, action: Action): Store => {
-
-  switch(action.type) {
-    case ActionType.SET_MOVIES:
-      return {
-        ...state,
-        allMovies: action.payload
-      }
-    case ActionType.SET_GENRE:
-      return {
-        ...state,
-        genre: action.payload
-      }
-  }
-
-  return state;
-};
-
-export {reducer, ActionCreator, initialState, ActionType};
+export default combineReducers({
+  [NameSpace.DATA]: data,
+  [NameSpace.USER]: user,
+  [NameSpace.APP]: app,
+});

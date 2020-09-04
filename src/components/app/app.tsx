@@ -1,13 +1,26 @@
 import * as React from 'react';
-import {Movie} from '../../types';
+import {Movie, Store} from '../../types';
+import {connect} from 'react-redux';
+
+import {getAllMovies} from '../../reducer/data/selectors';
 
 import PageMain from '../page-main/page-main';
 import PageMovie from '../page-movie/page-movie';
 import Player from '../player/player';
+import SignIn from '../sign-in/sign-in';
+import AddReview from '../add-review/add-review';
 
+import withLogIn from '../../hocs/with-log-in/with-log-in';
 import withVideoPlayer from '../../hocs/with-video-player/with-video-player';
+import withComment from '../../hocs/with-comment/with-comment';
+
+import {getRequireAuthorization} from '../../reducer/user/selectors';
 
 const PlayerWrapped = withVideoPlayer(Player);
+
+const SignInWrapped = withLogIn(SignIn);
+
+const AddReviewWrapped = withComment(AddReview);
 
 interface State {
   playingFilm: Movie;
@@ -16,9 +29,10 @@ interface State {
 
 interface Props {
   movies: Movie[];
+  requireAuthorization: boolean;
 }
 
-export default class App extends React.PureComponent<Props, State> {
+class App extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -29,6 +43,12 @@ export default class App extends React.PureComponent<Props, State> {
   }
 
   render() {
+    return <AddReviewWrapped />;
+
+    if (this.props.requireAuthorization) {
+      return <SignInWrapped />
+    }
+
     if (this.state.playingFilm) {
 
       return <PlayerWrapped
@@ -57,6 +77,10 @@ export default class App extends React.PureComponent<Props, State> {
       />;
     }
 
+    if (this.props.movies.length === 0) {
+      return null;
+    }
+
     return <PageMain
       allMovies={this.props.movies}
       onSelectMovie={(movie: Movie): void => {
@@ -65,3 +89,12 @@ export default class App extends React.PureComponent<Props, State> {
     />;
   }
 }
+
+const mapStateToProps = (state: Store) => {
+  return {
+    movies: getAllMovies(state),
+    requireAuthorization: getRequireAuthorization(state),
+  }
+};
+
+export default connect(mapStateToProps)(App);

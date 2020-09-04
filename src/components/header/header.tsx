@@ -1,23 +1,38 @@
 import * as React from 'react';
+import {connect} from 'react-redux';
+import {Store} from '../../types';
+import {URL} from '../../const';
+import Logo from '../logo/logo';
 
-const Header = () => {
+import {getUserAvatar} from '../../reducer/user/selectors';
+
+interface Props {
+  avatar: string;
+}
+
+const Header: React.FunctionComponent<Props> = (props: Props) => {
+  const {avatar} = props;
   return (
     <header className="page-header movie-card__head">
-      <div className="logo">
-        <a className="logo__link">
-          <span className="logo__letter logo__letter--1">W</span>
-          <span className="logo__letter logo__letter--2">T</span>
-          <span className="logo__letter logo__letter--3">W</span>
-        </a>
-      </div>
+      <Logo />
 
       <div className="user-block">
-        <div className="user-block__avatar">
-          <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+        {avatar
+          ? <div className="user-block__avatar">
+          <img src={`${URL.DOMEN}${avatar}`} alt="User avatar" width="63" height="63" />
         </div>
+          : <a href="sign-in.html" className="user-block__link">Sign in</a>
+        }
+
       </div>
     </header>
   );
 };
 
-export default Header;
+const mapStateToProps = (state: Store) => {
+  return {
+    avatar: getUserAvatar(state)
+  }
+}
+
+export default connect(mapStateToProps)(Header);

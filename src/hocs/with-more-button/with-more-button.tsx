@@ -3,7 +3,7 @@ import {Subtract} from 'utility-types';
 import {Movie, Store} from '../../types';
 import {connect} from 'react-redux';
 
-import {getMoviesByType} from '../../reducer/selectors';
+import {getMoviesByType} from '../../reducer/app-state/selectors';
 
 import {Count} from '../../const';
 

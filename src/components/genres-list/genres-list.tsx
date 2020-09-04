@@ -3,8 +3,8 @@ import {Store} from '../../types';
 import {connect} from 'react-redux';
 import {Genre} from '../../const';
 
-import {getAllGenres, getActiveGenre} from '../../reducer/selectors';
-import {ActionCreator} from '../../reducer/reducer';
+import {getAllGenres, getActiveGenre} from '../../reducer/app-state/selectors';
+import {ActionCreator} from '../../reducer/app-state/app-state';
 
 interface Props {
   genres: string[];
