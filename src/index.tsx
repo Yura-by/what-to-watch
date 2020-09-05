@@ -21,7 +21,7 @@ const api = createAPI(onRequireAuth);
 const store = createStore(
     reducer,
     composeWithDevTools(
-      applyMiddleware(thunk.withExtraArgument(api))
+        applyMiddleware(thunk.withExtraArgument(api))
     )
 );
 

@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch) => {
     onMovieClick: (id: number) => {
       dispatch(ActionCreator.setSelectedMovie(id));
     }
-  }
+  };
 };
 
 export default connect(null, mapDispatchToProps)(SmallMovieCard);

@@ -17,17 +17,19 @@ interface Props {
   rating: number;
   comment: string;
   avatar: string;
+  isSendingComment: boolean;
+  isBadSentComment: boolean;
 }
 
 const AddReview: React.FunctionComponent<Props> = (props: Props) => {
-  const {movie, onReviewChange, onReviewSend, onRatingChange, rating, comment, avatar} = props;
+  const {movie, onReviewChange, onReviewSend, onRatingChange, rating, comment, avatar, isSendingComment, isBadSentComment} = props;
   if (!movie) {
     return null;
   }
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
-         <div className="movie-card__bg">
+        <div className="movie-card__bg">
           <img src={movie.backgroundImage} alt={movie.name} />
         </div>
 
@@ -72,40 +74,29 @@ const AddReview: React.FunctionComponent<Props> = (props: Props) => {
                     <input className="rating__input" id={`star-${numberInput}`} type="radio" name="rating" value={numberInput}
                       onChange={onRatingChange}
                       checked={rating === numberInput}
+                      disabled={isSendingComment}
                     />
                     <label className="rating__label" htmlFor={`star-${numberInput}`}>Rating {numberInput}</label>
                   </React.Fragment>
 
                 );
               })}
-              {/* <input className="rating__input" id="star-1" type="radio" name="rating" value="1"/>
-              <label className="rating__label" htmlFor="star-1">Rating 1</label>
-
-              <input className="rating__input" id="star-2" type="radio" name="rating" value="2" />
-              <label className="rating__label" htmlFor="star-2">Rating 2</label>
-
-              <input className="rating__input" id="star-3" type="radio" name="rating" value="3" checked />
-              <label className="rating__label" htmlFor="star-3">Rating 3</label>
-
-              <input className="rating__input" id="star-4" type="radio" name="rating" value="4" />
-              <label className="rating__label" htmlFor="star-4">Rating 4</label>
-
-              <input className="rating__input" id="star-5" type="radio" name="rating" value="5"
-                onChange={}
-              />
-              <label className="rating__label" htmlFor="star-5">Rating 5</label> */}
             </div>
           </div>
 
           <div className="add-review__text">
+            {isBadSentComment ? <div>Comment is not allowed to be empty!</div> : ``}
             <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"
+              disabled={isSendingComment}
               onChange={onReviewChange}
               value={comment}
             >
 
             </textarea>
             <div className="add-review__submit">
-              <button className="add-review__btn" type="submit">Post</button>
+              <button className="add-review__btn" type="submit"
+                disabled={isSendingComment}
+              >Post</button>
             </div>
 
           </div>
@@ -119,7 +110,7 @@ const AddReview: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: Store) => {
   return {
     avatar: getUserAvatar(state)
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(AddReview);

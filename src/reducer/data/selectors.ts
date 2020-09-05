@@ -9,4 +9,16 @@ const getReviews = (state: Store) => {
   return state[NameSpace.DATA].comments;
 };
 
-export {getAllMovies, getReviews};
+const getIsSendingComment = (state: Store) => {
+  return state[NameSpace.DATA].isSendingComment;
+};
+
+const getIsBadSentComment = (state: Store) => {
+  return state[NameSpace.DATA].isBadSentComment;
+};
+
+const geIsCommentSent = (state: Store) => {
+  return state[NameSpace.DATA].isCommentSent;
+};
+
+export {getAllMovies, getReviews, getIsSendingComment, getIsBadSentComment, geIsCommentSent};

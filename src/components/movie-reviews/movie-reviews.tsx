@@ -11,7 +11,7 @@ interface Props {
 
 const MovieReviews: React.FunctionComponent<Props> = (props: Props) => {
   const {comments} = props;
-  switch(comments.length) {
+  switch (comments.length) {
     case 0:
       return null;
     case 1:
@@ -28,10 +28,10 @@ const MovieReviews: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <div className="movie-card__reviews movie-card__row">
       <div className="movie-card__reviews-col">
-        {commentsLeftColumn.map((it) => <Review comment={it} />)}
+        {commentsLeftColumn.map((it) => <Review comment={it} key={it.id}/>)}
       </div>
       <div className="movie-card__reviews-col">
-        {commentsRightColumn.map((it) => <Review comment={it} />)}
+        {commentsRightColumn.map((it) => <Review comment={it} key={it.id}/>)}
       </div>
     </div>
   );
@@ -41,6 +41,6 @@ const mapStateToProps = (state: Store) => {
   return {
     comments: getReviews(state),
   };
-}
+};
 
 export default connect(mapStateToProps)(MovieReviews);

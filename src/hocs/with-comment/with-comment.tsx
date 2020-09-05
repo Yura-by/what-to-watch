@@ -2,7 +2,8 @@ import * as React from 'react';
 import {Movie, Store, SendingComment} from '../../types';
 import {Subtract} from 'utility-types';
 import {connect} from 'react-redux';
-import {Operation} from '../../reducer/data/data';
+import {Operation, ActionCreator} from '../../reducer/data/data';
+import {getIsSendingComment, getIsBadSentComment, geIsCommentSent} from '../../reducer/data/selectors';
 
 import {getSelectedMovie} from '../../reducer/app-state/selectors';
 
@@ -13,6 +14,11 @@ interface State {
 
 interface Props {
   movie: Movie;
+  onReviewClear: () => void;
+  isSendingComment: boolean;
+  isBadSentComment: boolean;
+  isCommentSent: boolean;
+  onWithCommentsUnmount: () => void;
 }
 
 interface InjectingProps {
@@ -36,7 +42,7 @@ const withComment = (Component) => {
       this.state = {
         rating: 1,
         comment: ``,
-      }
+      };
 
       this._reviewSendHandler = this._reviewSendHandler.bind(this);
       this._reviewChangeHandler = this._reviewChangeHandler.bind(this);
@@ -48,7 +54,7 @@ const withComment = (Component) => {
       this.props.onReviewSend(this.props.movie.id, {
         rating: this.state.rating,
         comment: this.state.comment,
-      })
+      });
     }
 
     private _reviewChangeHandler(evt: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -66,6 +72,7 @@ const withComment = (Component) => {
     render() {
       return (
         <Component
+          {...this.props}
           onReviewSend={this._reviewSendHandler}
           onReviewChange={this._reviewChangeHandler}
           onRatingChange={this._ratingChangeHandler}
@@ -76,14 +83,31 @@ const withComment = (Component) => {
       );
     }
 
+    componentDidUpdate() {
+      if (this.props.isCommentSent) {
+        this.setState({
+          rating: 1,
+          comment: ``,
+        });
+        this.props.onReviewClear();
+      }
+    }
+
+    componentWillUnmount() {
+      this.props.onWithCommentsUnmount();
+    }
+
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(WithComment);
-}
+};
 
 const mapStateToProps = (state: Store) => {
   return {
-    movie: getSelectedMovie(state)
+    movie: getSelectedMovie(state),
+    isSendingComment: getIsSendingComment(state),
+    isBadSentComment: getIsBadSentComment(state),
+    isCommentSent: geIsCommentSent(state),
   };
 };
 
@@ -92,7 +116,17 @@ const mapDispatchToProps = (dispatch) => {
     onReviewSend: (id: number, review: SendingComment) => {
       dispatch(Operation.sendComment(id, review));
     },
-  }
+
+    onReviewClear: () => {
+      dispatch(ActionCreator.setIsCommentSent(false));
+    },
+
+    onWithCommentsUnmount: () => {
+      dispatch(ActionCreator.setIsCommentSent(false));
+      dispatch(ActionCreator.setIsBadSentComment(false));
+      dispatch(ActionCreator.setIsSendingComment(false));
+    }
+  };
 };
 
 export default withComment;

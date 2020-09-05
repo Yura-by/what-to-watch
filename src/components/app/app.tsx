@@ -46,8 +46,9 @@ class App extends React.PureComponent<Props, State> {
     return <AddReviewWrapped />;
 
     if (this.props.requireAuthorization) {
-      return <SignInWrapped />
+      return <SignInWrapped />;
     }
+    // return <AddReviewWrapped />
 
     if (this.state.playingFilm) {
 
@@ -94,7 +95,7 @@ const mapStateToProps = (state: Store) => {
   return {
     movies: getAllMovies(state),
     requireAuthorization: getRequireAuthorization(state),
-  }
+  };
 };
 
 export default connect(mapStateToProps)(App);

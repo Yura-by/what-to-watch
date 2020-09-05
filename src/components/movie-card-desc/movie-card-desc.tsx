@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => {
     onReviewsClick: (id: number) => {
       dispatch(Operation.loadComments(id));
     }
-  }
+  };
 };
 
 export default connect(null, mapDispatchToProps)(MovieCardDesc);

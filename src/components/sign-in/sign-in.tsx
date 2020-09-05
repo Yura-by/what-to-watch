@@ -54,7 +54,7 @@ const SignIn = (props: Props) => {
 
       <Footer />
     </div>
-  )
+  );
 };
 
 export default SignIn;

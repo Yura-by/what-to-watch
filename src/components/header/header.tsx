@@ -19,8 +19,8 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
       <div className="user-block">
         {avatar
           ? <div className="user-block__avatar">
-          <img src={`${URL.DOMEN}${avatar}`} alt="User avatar" width="63" height="63" />
-        </div>
+            <img src={`${URL.DOMEN}${avatar}`} alt="User avatar" width="63" height="63" />
+          </div>
           : <a href="sign-in.html" className="user-block__link">Sign in</a>
         }
 
@@ -32,7 +32,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: Store) => {
   return {
     avatar: getUserAvatar(state)
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(Header);

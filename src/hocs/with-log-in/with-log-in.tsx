@@ -13,7 +13,7 @@ interface State {
 
 interface Props {
   isBadRequest: boolean;
-  onFormSubmit: (state: State) => void
+  onFormSubmit: (state: State) => void;
 }
 
 interface InjectedProps {
@@ -36,7 +36,7 @@ const withLogIn = (Component) => {
       this.state = {
         email: ``,
         password: ``,
-      }
+      };
 
       this._loginChangeHandler = this._loginChangeHandler.bind(this);
       this._passwordChangeHandler = this._passwordChangeHandler.bind(this);
@@ -46,13 +46,13 @@ const withLogIn = (Component) => {
     private _loginChangeHandler(evt: React.ChangeEvent<HTMLInputElement>) {
       this.setState({
         email: evt.target.value
-      })
+      });
     }
 
     private _passwordChangeHandler(evt: React.ChangeEvent<HTMLInputElement>) {
       this.setState({
         password: evt.target.value
-      })
+      });
     }
 
     private _formSendHandler(evt: React.FormEvent<HTMLFormElement>) {
@@ -84,9 +84,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onFormSubmit: (data: State) => {
-      dispatch(Operation.signIn(data))
+      dispatch(Operation.signIn(data));
     }
-  }
-}
+  };
+};
 
 export default withLogIn;
