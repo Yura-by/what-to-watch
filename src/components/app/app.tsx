@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Movie, Store} from '../../types';
 import {connect} from 'react-redux';
+import {Switch, Route} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 import {getAllMovies} from '../../reducer/data/selectors';
 
@@ -33,62 +35,81 @@ interface Props {
 }
 
 class App extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
+  // constructor(props: Props) {
+  //   super(props);
 
-    this.state = {
-      playingFilm: null,
-      selectedFilm: null,
-    };
-  }
+  //   this.state = {
+  //     playingFilm: null,
+  //     selectedFilm: null,
+  //   };
+  // }
 
   render() {
-    return <AddReviewWrapped />;
-
-    if (this.props.requireAuthorization) {
-      return <SignInWrapped />;
-    }
-    // return <AddReviewWrapped />
-
-    if (this.state.playingFilm) {
-
-      return <PlayerWrapped
-        movie={this.state.playingFilm}
-        onExitPlayer={() => {
-          this.setState({playingFilm: null});
-          this.setState({selectedFilm: null});
-        }}
-      />;
-    }
-
-    if (this.state.selectedFilm) {
-      return <PageMovie
-        movie={this.state.selectedFilm}
-        movies={this.props.movies}
-        onMoviePlay={() => {
-          this.setState((prevState) => {
-            return {
-              playingFilm: prevState.selectedFilm
-            };
-          });
-        }}
-        onSelectMovie={(movie: Movie): void => {
-          this.setState({selectedFilm: movie});
-        }}
-      />;
-    }
-
-    if (this.props.movies.length === 0) {
-      return null;
-    }
-
-    return <PageMain
-      allMovies={this.props.movies}
-      onSelectMovie={(movie: Movie): void => {
-        this.setState({selectedFilm: movie});
-      }}
-    />;
+    return (
+      <Switch>
+        <Route
+          path={AppRoute.ROOT}
+          exact
+          render={() => {
+            return <PageMain allMovies={this.props.movies} />
+          }}
+        />
+        <Route
+          path={AppRoute.LOGIN}
+          exact
+          component={SignInWrapped}
+        />
+      </Switch>
+    );
   }
+
+  // render() {
+  //   return <AddReviewWrapped />;
+
+  //   if (this.props.requireAuthorization) {
+  //     return <SignInWrapped />;
+  //   }
+  //   // return <AddReviewWrapped />
+
+  //   if (this.state.playingFilm) {
+
+  //     return <PlayerWrapped
+  //       movie={this.state.playingFilm}
+  //       onExitPlayer={() => {
+  //         this.setState({playingFilm: null});
+  //         this.setState({selectedFilm: null});
+  //       }}
+  //     />;
+  //   }
+
+  //   if (this.state.selectedFilm) {
+  //     return <PageMovie
+  //       movie={this.state.selectedFilm}
+  //       movies={this.props.movies}
+  //       onMoviePlay={() => {
+  //         this.setState((prevState) => {
+  //           return {
+  //             playingFilm: prevState.selectedFilm
+  //           };
+  //         });
+  //       }}
+  //       onSelectMovie={(movie: Movie): void => {
+  //         this.setState({selectedFilm: movie});
+  //       }}
+  //     />;
+  //   }
+
+  //   if (this.props.movies.length === 0) {
+  //     return null;
+  //   }
+
+  //   return <PageMain
+  //     allMovies={this.props.movies}
+  //     onSelectMovie={(movie: Movie): void => {
+  //       this.setState({selectedFilm: movie});
+  //     }}
+  //   />;
+  // }
 }
 
 const mapStateToProps = (state: Store) => {

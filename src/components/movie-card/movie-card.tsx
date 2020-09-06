@@ -1,8 +1,11 @@
 import * as React from 'react';
 import {Movie} from '../../types';
+import {connect} from 'react-redux';
+import {getRandomMovie} from '../../reducer/data/selectors';
 
 import Header from '../header/header';
 import MoviCardButtons from '../movie-card-buttons/movie-card-buttons';
+import {Store} from '../../types';
 
 interface Props {
   movie: Movie;
@@ -10,6 +13,9 @@ interface Props {
 
 const MovieCard: React.FunctionComponent<Props> = (props: Props) => {
   const {movie} = props;
+  if (movie === null) {
+    return null;
+  }
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -44,4 +50,10 @@ const MovieCard: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-export default MovieCard;
+const mapStateToProps = (state: Store) => {
+  return {
+    movie: getRandomMovie(state),
+  };
+};
+
+export default connect(mapStateToProps)(MovieCard);

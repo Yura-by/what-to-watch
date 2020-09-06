@@ -10,12 +10,12 @@ const MoviesListWrapped = withPlayingMovie(MoviesList);
 
 interface Props {
   movies: Movie[];
-  onCardClick: (movie: Movie) => void;
+  // onCardClick: (movie: Movie) => void;
   children: React.ReactNode;
 }
 
 const Catalog: React.FunctionComponent<Props> = (props: Props) => {
-  const {movies, onCardClick} = props;
+  const {movies} = props;
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
@@ -24,7 +24,7 @@ const Catalog: React.FunctionComponent<Props> = (props: Props) => {
 
       <MoviesListWrapped
         movies={movies}
-        onCardClick={onCardClick}
+        // onCardClick={onCardClick}
       />
 
       <div className="catalog__more">

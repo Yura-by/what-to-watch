@@ -7,18 +7,18 @@ interface Props {
   onCardLeave: () => void;
   playingPlayer: number;
   movies: Movie[];
-  onCardClick: (movie: Movie) => void;
+  // onCardClick: (movie: Movie) => void;
 }
 
 const MoviesList: React.FunctionComponent<Props> = (props: Props) => {
-  const {movies, onCardClick, onCardHover, onCardLeave, playingPlayer} = props;
+  const {movies, onCardHover, onCardLeave, playingPlayer} = props;
   return (
     <div className="catalog__movies-list">
       {movies.map((it) => {
         return (
           <SmallMovieCard
             movie={it}
-            onCardClick={onCardClick}
+            // onCardClick={onCardClick}
             onCardHover={onCardHover}
             onCardLeave={onCardLeave}
             key={it.id}

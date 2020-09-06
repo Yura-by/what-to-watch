@@ -1,3 +1,5 @@
+import { Route } from "react-router-dom"
+
 export enum Navigation {
   overview = `overview`,
   details = `details`,
@@ -16,4 +18,13 @@ export enum Count {
 export enum URL {
   DOMEN = `https://htmlacademy-react-3.appspot.com`,
   HOST = `/wtw`,
+}
+
+export enum AppRoute {
+  ROOT = `/`,
+  LOGIN = `/login`,
+  MAIN = `/main`,
+  ADD_COMMENT = `/add-comment/`,
+  MOVIE = `/movie/`,
+  PLAYER = `/player/`,
 }

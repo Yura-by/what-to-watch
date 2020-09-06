@@ -11,19 +11,17 @@ const CatalogWrapped = withMoreButton(Catalog);
 
 interface Props {
   allMovies: Movie[];
-  onSelectMovie: (movie: Movie) => void;
+  // onSelectMovie: (movie: Movie) => void;
 }
 
 const PageMain: React.FunctionComponent<Props> = (props: Props) => {
-  const {allMovies, onSelectMovie} = props;
+  const {allMovies} = props;
   return (
     <React.Fragment>
-      <MovieCard
-        movie={allMovies[0]}
-      />
+      <MovieCard />
       <PageContent>
         <CatalogWrapped
-          onCardClick={onSelectMovie}
+          // onCardClick={onSelectMovie}
         />
       </PageContent>
     </React.Fragment>

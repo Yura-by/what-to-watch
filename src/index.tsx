@@ -4,17 +4,21 @@ import thunk from 'redux-thunk';
 import {createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
+import {createBrowserHistory} from 'history';
+import {Router} from 'react-router-dom';
+import {AppRoute} from './const';
 
 import createAPI from './api';
 import reducer from './reducer/reducer';
 import {Operation as DataOperation} from './reducer/data/data';
 import {Operation as UserOperation} from './reducer/user/user';
-import {ActionCreator} from './reducer/user/user';
 
 import App from './components/app/app';
 
+const history = createBrowserHistory();
+
 const onRequireAuth = () => {
-  store.dispatch(ActionCreator.setRequireAuthorization(true));
+  store.dispatch(() => history.push(AppRoute.LOGIN));
 };
 const api = createAPI(onRequireAuth);
 
@@ -29,5 +33,7 @@ store.dispatch(DataOperation.loadMovies());
 store.dispatch(UserOperation.checkLogin());
 
 ReactDOM.render(<Provider store={store}>
-  <App />
+  <Router history={history}>
+    <App />
+  </Router>
 </Provider>, document.getElementById(`root`));

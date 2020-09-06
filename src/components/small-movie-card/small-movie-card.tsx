@@ -7,7 +7,7 @@ import {Movie} from '../../types';
 
 interface Props {
   movie: Movie;
-  onCardClick: (movie: Movie) => void;
+  // onCardClick: (movie: Movie) => void;
   onCardHover: (id: number) => void;
   onCardLeave: () => void;
   isPlayVideo: boolean;
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const SmallMovieCard: React.FunctionComponent<Props> = (props: Props) => {
-  const {movie, onCardClick, onCardHover, onCardLeave, isPlayVideo, onMovieClick} = props;
+  const {movie, onCardHover, onCardLeave, isPlayVideo, onMovieClick} = props;
   return (
     <article
       className="small-movie-card catalog__movies-card"
@@ -25,7 +25,6 @@ const SmallMovieCard: React.FunctionComponent<Props> = (props: Props) => {
       onMouseLeave={onCardLeave}
       onClick={(evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         evt.preventDefault();
-        onCardClick(movie);
         onMovieClick(movie.id);
       }}
     >

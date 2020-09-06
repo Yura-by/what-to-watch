@@ -29,7 +29,7 @@ it(`On click on title callback is called correctly`, () => {
   const tree = mount(<Provider store={store}>
     <PageMain
       allMovies={Movies}
-      onSelectMovie={mockFunc}
+      // onSelectMovie={mockFunc}
     />
   </Provider>);
 

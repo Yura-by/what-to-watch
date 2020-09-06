@@ -25,7 +25,7 @@ it(`PageMain snapshot test`, () => {
     .create(<Provider store={store}>
       <PageMain
         allMovies={Movies}
-        onSelectMovie={jest.fn()}
+        // onSelectMovie={jest.fn()}
       />
     </Provider>).toJSON();
 
