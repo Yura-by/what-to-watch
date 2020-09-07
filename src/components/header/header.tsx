@@ -1,8 +1,10 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {Store} from '../../types';
 import {URL} from '../../const';
 import Logo from '../logo/logo';
+import {AppRoute} from '../../const';
 
 import {getUserAvatar} from '../../reducer/user/selectors';
 
@@ -18,10 +20,12 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
 
       <div className="user-block">
         {avatar
-          ? <div className="user-block__avatar">
-            <img src={`${URL.DOMEN}${avatar}`} alt="User avatar" width="63" height="63" />
-          </div>
-          : <a href="sign-in.html" className="user-block__link">Sign in</a>
+          ? <Link to={AppRoute.FAVORITE}>
+            <div className="user-block__avatar">
+              <img src={`${URL.DOMEN}${avatar}`} alt="User avatar" width="63" height="63" />
+            </div>
+          </Link>
+          : <Link to={AppRoute.LOGIN} className="user-block__link">Sign in</Link>
         }
 
       </div>

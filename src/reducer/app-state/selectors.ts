@@ -42,7 +42,12 @@ const getSelectedMovie = createSelector(
   (id, movies) => {
     return movies.find((it) => it.id === id);
   }
-)
+);
 
-export {getAllGenres, getAllMovies, getActiveGenre, getMoviesByType, getSelectedMovieId, getSelectedMovie};
+const getLikeThisMovies = createSelector(
+  getMoviesByType,
+  (movies) => movies.slice(0, 4)
+);
+
+export {getAllGenres, getAllMovies, getActiveGenre, getMoviesByType, getSelectedMovieId, getSelectedMovie, getLikeThisMovies};
 

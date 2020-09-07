@@ -39,9 +39,10 @@ const MovieCard: React.FunctionComponent<Props> = (props: Props) => {
               <span className="movie-card__year">{movie.released}</span>
             </p>
             <MoviCardButtons
-              onPlay={() => {
-                event.preventDefault();
-              }}
+              // onPlay={() => {
+              //   event.preventDefault();
+              // }}
+              movieId={movie.id}
             />
           </div>
         </div>

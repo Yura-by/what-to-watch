@@ -8,14 +8,16 @@ import PageContent from '../page-content/page-content';
 import CatalogLikeThis from '../catalog-like-this/catalog-like-this';
 
 interface Props {
-  movie: Movie;
+  // movie: Movie;
   movies: Movie[];
-  onMoviePlay: () => void;
-  onSelectMovie: (movie: Movie) => void;
+  match: any;
+  // onMoviePlay: () => void;
+  // onSelectMovie: (movie: Movie) => void;
 }
 
 const PageMovie: React.FunctionComponent<Props> = (props: Props) => {
-  const {movie, onMoviePlay, movies, onSelectMovie} = props;
+  const {movies, match} = props;
+  const movie = movies.find((it) => it.id === match.params.id);
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
@@ -37,7 +39,8 @@ const PageMovie: React.FunctionComponent<Props> = (props: Props) => {
               </p>
 
               <MoviCardButtons
-                onPlay={onMoviePlay}
+                // onPlay={onMoviePlay}
+                movieId={movie.id}
               >
                 <a href="add-review.html" className="btn movie-card__button">Add review</a>
               </MoviCardButtons>
@@ -59,8 +62,8 @@ const PageMovie: React.FunctionComponent<Props> = (props: Props) => {
       </section>
       <PageContent>
         <CatalogLikeThis
-          movies={movies}
-          onCardClick={onSelectMovie}
+          // movies={movies}
+          // onCardClick={onSelectMovie}
         />
       </PageContent>
     </React.Fragment>

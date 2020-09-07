@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 import {Operation} from '../../reducer/user/user';
 
-import {getRequestStatus} from '../../reducer/user/selectors';
+import {getRequestStatus, getRequireAuthorization} from '../../reducer/user/selectors';
 
 interface State {
   email: string;
@@ -14,6 +14,7 @@ interface State {
 interface Props {
   isBadRequest: boolean;
   onFormSubmit: (state: State) => void;
+  isRequireAuthorization: boolean;
 }
 
 interface InjectedProps {
@@ -61,6 +62,11 @@ const withLogIn = (Component) => {
     }
 
     render() {
+      const {history} = this.props;
+      console.log(history)
+      if (!this.props.isRequireAuthorization) {
+        history.go(-1);
+      }
       return <Component
         logIn={this.state.email}
         onLoginChange={this._loginChangeHandler}
@@ -77,7 +83,8 @@ const withLogIn = (Component) => {
 
 const mapStateToProps = (state) => {
   return {
-    isBadRequest: getRequestStatus(state)
+    isBadRequest: getRequestStatus(state),
+    isRequireAuthorization: getRequireAuthorization(state),
   };
 };
 

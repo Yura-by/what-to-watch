@@ -1,5 +1,8 @@
 import * as React from 'react';
-import {Movie} from '../../types';
+import {Movie, Store} from '../../types';
+import {connect} from 'react-redux';
+
+import {getLikeThisMovies} from '../../reducer/app-state/selectors';
 
 import MoviesList from '../movies-list/movies-list';
 
@@ -7,24 +10,31 @@ import withPlayingMovie from '../../hocs/with-playing-movie/with-playing-movie';
 
 interface Props {
   movies: Movie[];
-  onCardClick: (movie: Movie) => void;
+  // onCardClick: (movie: Movie) => void;
 }
 
 const MoviesListWrapped = withPlayingMovie(MoviesList);
 
 const Catalog: React.FunctionComponent<Props> = (props: Props) => {
-  const {movies, onCardClick} = props;
+  const {movies} = props;
   return (
     <section className="catalog catalog--like-this">
       <h2 className="catalog__title">More like this</h2>
 
       <MoviesListWrapped
-        movies={movies.slice(0, 4)}
-        onCardClick={onCardClick}
+        movies={movies}
+        // onCardClick={onCardClick}
       />
 
     </section>
   );
 };
 
-export default Catalog;
+const mapStateToProps = (state: Store) => {
+  return {
+    movies: getLikeThisMovies(state)
+  };
+}
+
+
+export default connect(mapStateToProps)(Catalog);

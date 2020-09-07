@@ -44,6 +44,8 @@ class App extends React.PureComponent<Props, State> {
   //   };
   // }
 
+
+
   render() {
     return (
       <Switch>
@@ -59,9 +61,36 @@ class App extends React.PureComponent<Props, State> {
           exact
           component={SignInWrapped}
         />
+        <Route
+          path={`${AppRoute.MOVIE}: id`}
+          exact
+          render={(props) => {
+            return (
+              <PageMovie
+                {...props}
+                movies={this.props.movies}
+              />
+            );
+          }}
+        />
       </Switch>
     );
   }
+
+  //     <PageMovie
+  //       movie={this.state.selectedFilm}
+  //       movies={this.props.movies}
+  //       onMoviePlay={() => {
+  //         this.setState((prevState) => {
+  //           return {
+  //             playingFilm: prevState.selectedFilm
+  //           };
+  //         });
+  //       }}
+  //       onSelectMovie={(movie: Movie): void => {
+  //         this.setState({selectedFilm: movie});
+  //       }}
+  //     />;
 
   // render() {
   //   return <AddReviewWrapped />;
