@@ -4,8 +4,7 @@ import {Subtract} from 'utility-types';
 import {connect} from 'react-redux';
 import {Operation, ActionCreator} from '../../reducer/data/data';
 import {getIsSendingComment, getIsBadSentComment, geIsCommentSent} from '../../reducer/data/selectors';
-
-import {getSelectedMovie} from '../../reducer/app-state/selectors';
+import {getAllMovies} from '../../reducer/data/selectors';
 
 interface State {
   rating: number;
@@ -13,12 +12,13 @@ interface State {
 }
 
 interface Props {
-  movie: Movie;
+  movies: Movie[];
   onReviewClear: () => void;
   isSendingComment: boolean;
   isBadSentComment: boolean;
   isCommentSent: boolean;
   onWithCommentsUnmount: () => void;
+  match: any;
 }
 
 interface InjectingProps {
@@ -51,7 +51,9 @@ const withComment = (Component) => {
 
     private _reviewSendHandler(evt: React.FormEvent<HTMLFormElement>) {
       evt.preventDefault();
-      this.props.onReviewSend(this.props.movie.id, {
+      const movie = this.props.movies.find((it) => it.id === Number(this.props.match.params.id));
+
+      this.props.onReviewSend(movie.id, {
         rating: this.state.rating,
         comment: this.state.comment,
       });
@@ -70,6 +72,7 @@ const withComment = (Component) => {
     }
 
     render() {
+      const movie = this.props.movies.find((it) => it.id === Number(this.props.match.params.id));
       return (
         <Component
           {...this.props}
@@ -78,7 +81,7 @@ const withComment = (Component) => {
           onRatingChange={this._ratingChangeHandler}
           rating={this.state.rating}
           comment={this.state.comment}
-          movie={this.props.movie}
+          movie={movie}
         />
       );
     }
@@ -104,7 +107,7 @@ const withComment = (Component) => {
 
 const mapStateToProps = (state: Store) => {
   return {
-    movie: getSelectedMovie(state),
+    movies: getAllMovies(state),
     isSendingComment: getIsSendingComment(state),
     isBadSentComment: getIsBadSentComment(state),
     isCommentSent: geIsCommentSent(state),

@@ -1,7 +1,8 @@
 import * as React from 'react';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 interface Props {
-  onExitPlayer: () => void;
   percentsVideo: number;
   progressRef: React.RefObject<HTMLProgressElement>;
   onProgressClick: (evt: React.MouseEvent<HTMLProgressElement, MouseEvent>) => void;
@@ -22,7 +23,6 @@ const formatTime = (time: number): string => {
 const Player: React.FunctionComponent<Props> = (props: Props) => {
 
   const {
-    onExitPlayer,
     percentsVideo,
     progressRef,
     onProgressClick,
@@ -39,11 +39,10 @@ const Player: React.FunctionComponent<Props> = (props: Props) => {
     <div className="player">
       {props.children}
 
-      <button
-        onClick={onExitPlayer}
-        type="button"
+      <Link to={AppRoute.ROOT}
         className="player__exit"
-      >Exit</button>
+      >Exit
+      </Link>
 
       <div className="player__controls">
         <div className="player__controls-row">

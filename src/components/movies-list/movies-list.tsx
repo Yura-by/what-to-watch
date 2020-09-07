@@ -7,7 +7,6 @@ interface Props {
   onCardLeave: () => void;
   playingPlayer: number;
   movies: Movie[];
-  // onCardClick: (movie: Movie) => void;
 }
 
 const MoviesList: React.FunctionComponent<Props> = (props: Props) => {
@@ -18,7 +17,6 @@ const MoviesList: React.FunctionComponent<Props> = (props: Props) => {
         return (
           <SmallMovieCard
             movie={it}
-            // onCardClick={onCardClick}
             onCardHover={onCardHover}
             onCardLeave={onCardLeave}
             key={it.id}

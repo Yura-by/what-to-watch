@@ -63,7 +63,6 @@ const withLogIn = (Component) => {
 
     render() {
       const {history} = this.props;
-      console.log(history)
       if (!this.props.isRequireAuthorization) {
         history.go(-1);
       }

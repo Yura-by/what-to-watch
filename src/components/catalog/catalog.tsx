@@ -10,7 +10,6 @@ const MoviesListWrapped = withPlayingMovie(MoviesList);
 
 interface Props {
   movies: Movie[];
-  // onCardClick: (movie: Movie) => void;
   children: React.ReactNode;
 }
 
@@ -24,7 +23,6 @@ const Catalog: React.FunctionComponent<Props> = (props: Props) => {
 
       <MoviesListWrapped
         movies={movies}
-        // onCardClick={onCardClick}
       />
 
       <div className="catalog__more">

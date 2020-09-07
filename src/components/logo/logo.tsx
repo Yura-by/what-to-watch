@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
 const Logo = () => {
-  console.log(AppRoute.ROOT)
   return (
     <div className="logo">
       <Link to={AppRoute.ROOT} className="logo__link">

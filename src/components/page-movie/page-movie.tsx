@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {Movie} from '../../types';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 import Header from '../header/header';
 import MoviCardButtons from '../movie-card-buttons/movie-card-buttons';
@@ -8,16 +10,13 @@ import PageContent from '../page-content/page-content';
 import CatalogLikeThis from '../catalog-like-this/catalog-like-this';
 
 interface Props {
-  // movie: Movie;
   movies: Movie[];
   match: any;
-  // onMoviePlay: () => void;
-  // onSelectMovie: (movie: Movie) => void;
 }
 
 const PageMovie: React.FunctionComponent<Props> = (props: Props) => {
   const {movies, match} = props;
-  const movie = movies.find((it) => it.id === match.params.id);
+  const movie = movies.find((it) => it.id === Number(match.params.id));
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
@@ -39,10 +38,9 @@ const PageMovie: React.FunctionComponent<Props> = (props: Props) => {
               </p>
 
               <MoviCardButtons
-                // onPlay={onMoviePlay}
                 movieId={movie.id}
               >
-                <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                <Link to={`${AppRoute.ADD_COMMENT}${movie.id}`} className="btn movie-card__button">Add review</Link>
               </MoviCardButtons>
 
             </div>
@@ -61,10 +59,7 @@ const PageMovie: React.FunctionComponent<Props> = (props: Props) => {
         </div>
       </section>
       <PageContent>
-        <CatalogLikeThis
-          // movies={movies}
-          // onCardClick={onSelectMovie}
-        />
+        <CatalogLikeThis />
       </PageContent>
     </React.Fragment>
   );

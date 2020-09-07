@@ -10,7 +10,6 @@ import withPlayingMovie from '../../hocs/with-playing-movie/with-playing-movie';
 
 interface Props {
   movies: Movie[];
-  // onCardClick: (movie: Movie) => void;
 }
 
 const MoviesListWrapped = withPlayingMovie(MoviesList);
@@ -23,7 +22,6 @@ const Catalog: React.FunctionComponent<Props> = (props: Props) => {
 
       <MoviesListWrapped
         movies={movies}
-        // onCardClick={onCardClick}
       />
 
     </section>

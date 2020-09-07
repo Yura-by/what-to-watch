@@ -1,11 +1,14 @@
 import * as React from 'react';
-import {Movie} from '../../types';
+import {Movie, Store} from '../../types';
+import {connect} from 'react-redux';
+
+import {getAllMovies} from '../../reducer/data/selectors';
 
 import Video from '../../components/video/video';
 
 interface Props {
-  movie: Movie;
-  onExitPlayer: () => void;
+  movies: Movie[];
+  match: any;
 }
 
 interface State {
@@ -39,11 +42,12 @@ const withVideoPlayer = (Component) => {
     }
 
     render() {
-      const {movie, onExitPlayer} = this.props;
+      const {movies, match} = this.props;
+      const movie = movies.find((it) => it.id === Number(match.params.id));
       const {videoLink, backgroundImage} = movie;
       return (
         <Component
-          onExitPlayer={onExitPlayer}
+          // onExitPlayer={onExitPlayer}
           percentsVideo={this.state.percentsVideo}
           progressRef={this._progressRef}
           onProgressClick={this._progressClickHandler}
@@ -127,7 +131,13 @@ const withVideoPlayer = (Component) => {
 
   }
 
-  return WithVideoPlayer;
+  return connect(mapStateToProps)(WithVideoPlayer);
+};
+
+const mapStateToProps = (state: Store) => {
+  return {
+    movies: getAllMovies(state)
+  };
 };
 
 export default withVideoPlayer;

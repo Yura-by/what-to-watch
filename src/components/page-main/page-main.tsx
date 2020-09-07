@@ -9,20 +9,12 @@ import withMoreButton from '../../hocs/with-more-button/with-more-button';
 
 const CatalogWrapped = withMoreButton(Catalog);
 
-interface Props {
-  allMovies: Movie[];
-  // onSelectMovie: (movie: Movie) => void;
-}
-
-const PageMain: React.FunctionComponent<Props> = (props: Props) => {
-  const {allMovies} = props;
+const PageMain = () => {
   return (
     <React.Fragment>
       <MovieCard />
       <PageContent>
-        <CatalogWrapped
-          // onCardClick={onSelectMovie}
-        />
+        <CatalogWrapped />
       </PageContent>
     </React.Fragment>
   );

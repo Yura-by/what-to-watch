@@ -2,6 +2,8 @@ import * as React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Store} from '../../types';
+import {AppRoute} from '../../const';
+
 
 import {getRequireAuthorization} from '../../reducer/user/selectors';
 
@@ -17,7 +19,7 @@ const PrivateRoute: React.FunctionComponent<Props> = ({component: Component, isR
     <Route
       {...rest}
       render={(props) => {
-        return isRequireAuthorization ? <Redirect to="/" /> : <Component {...props} />;
+        return isRequireAuthorization ? <Redirect to={AppRoute.LOGIN} /> : <Component {...props} />;
       }}
     />
   );

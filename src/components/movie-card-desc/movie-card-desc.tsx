@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 
-import {Operation} from '../../reducer/data/data';
+import {Operation, ActionCreator} from '../../reducer/data/data';
 
 import {Navigation} from '../../const';
 import {Movie} from '../../types';
@@ -18,6 +18,7 @@ interface State {
 interface Props {
   movie: Movie;
   onReviewsClick: (id: number) => void;
+  onChangeMovie: (id: number) => void;
 }
 
 class MovieCardDesc extends React.PureComponent<Props, State> {
@@ -57,6 +58,12 @@ class MovieCardDesc extends React.PureComponent<Props, State> {
     });
   }
 
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.movie !== this.props.movie) {
+      this.props.onChangeMovie(this.props.movie.id);
+    }
+  }
+
   render() {
     return (
       <div className="movie-card__desc">
@@ -75,6 +82,11 @@ class MovieCardDesc extends React.PureComponent<Props, State> {
 const mapDispatchToProps = (dispatch) => {
   return {
     onReviewsClick: (id: number) => {
+      dispatch(Operation.loadComments(id));
+    },
+
+    onChangeMovie: (id: number) => {
+      dispatch(ActionCreator.setComments([]));
       dispatch(Operation.loadComments(id));
     }
   };

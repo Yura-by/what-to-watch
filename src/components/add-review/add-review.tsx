@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Movie, Store} from '../../types';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 import {getUserAvatar} from '../../reducer/user/selectors';
 
@@ -41,7 +43,7 @@ const AddReview: React.FunctionComponent<Props> = (props: Props) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="movie-page.html" className="breadcrumbs__link">{movie.name}</a>
+                <Link to={`${AppRoute.MOVIE}${movie.id}`} className="breadcrumbs__link">{movie.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
