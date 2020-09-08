@@ -7,25 +7,46 @@ enum ActionType {
   SET_IS_SENDING_COMMENT = `SET_IS_SENDING_COMMENT`,
   SET_IS_BAD_SENT_COMMENT = `SET_IS_BAD_SENT_COMMENT`,
   SET_IS_COMMENT_SENT = `SET_IS_COMMENT_SENT`,
+  SET_PROMO_MOVIE = `SET_PROMO_MOVIE`,
+  SET_FAVORITE_MOVIES = `SET_FAVORITE_MOVIES`,
 }
 
 interface State {
   allMovies: Movie[];
   comments: Comment[];
+  promoMovie: Movie;
   isSendingComment: boolean;
   isBadSentComment: boolean;
   isCommentSent: boolean;
+  favoriteMovies: Movie[]
 }
 
 const initialState: State = {
   allMovies: [],
   comments: [],
+  promoMovie: null,
   isSendingComment: false,
   isBadSentComment: false,
   isCommentSent: false,
+  favoriteMovies: [],
 };
 
 const ActionCreator = {
+
+  setProvoMovie: (movie: Movie) => {
+    return {
+      type: ActionType.SET_PROMO_MOVIE,
+      payload: movie,
+    };
+  },
+
+  setFavoriteMovies: (movies: Movie[]) => {
+    return {
+      type: ActionType.SET_FAVORITE_MOVIES,
+      payload: movies,
+    };
+  },
+
   setMovies: (movies: Movie[]) => {
     return {
       type: ActionType.SET_MOVIES,
@@ -73,6 +94,13 @@ const Operation = {
     return api.get(`/comments/${movieId}`)
       .then((response) => {
         dispatch(ActionCreator.setComments(response.data));
+      });
+  },
+
+  loadFavorites: () => (dispatch, getState, api) => {
+    return api.get(`/favorite`)
+      .then((response) => {
+        dispatch(ActionCreator.setFavoriteMovies(MovieAdapter.getMovies(response.data)));
       })
   },
 
@@ -89,6 +117,13 @@ const Operation = {
         if (err.response.status === 400) {
           dispatch(ActionCreator.setIsBadSentComment(true));
         }
+      });
+  },
+
+  loadPromoMovie: () => (dispatch, getState, api) => {
+    return api.get(`/films/promo`)
+      .then((response) => {
+        dispatch(ActionCreator.setProvoMovie(MovieAdapter.getMovie(response.data)));
       });
   }
 };
@@ -115,6 +150,14 @@ const reducer = (state: State = initialState, action: Action) => {
     case ActionType.SET_IS_COMMENT_SENT:
       return Object.assign({}, state, {
         isCommentSent: action.payload,
+      });
+    case ActionType.SET_PROMO_MOVIE:
+      return Object.assign({}, state, {
+        promoMovie: action.payload
+      });
+    case ActionType.SET_FAVORITE_MOVIES:
+      return Object.assign({}, state, {
+        favoriteMovies: action.payload
       });
   }
   return state;

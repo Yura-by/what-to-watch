@@ -27,5 +27,5 @@ export enum AppRoute {
   ADD_COMMENT = `/add-comment/`,
   MOVIE = `/movie/`,
   PLAYER = `/player/`,
-  FAVORITE = `/favorite`
+  FAVORITES = `/favorites`
 }

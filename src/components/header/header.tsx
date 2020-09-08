@@ -20,10 +20,10 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
 
       <div className="user-block">
         {avatar
-          ? <Link to={AppRoute.FAVORITE}>
-            <div className="user-block__avatar">
-              <img src={`${URL.DOMEN}${avatar}`} alt="User avatar" width="63" height="63" />
-            </div>
+          ? <Link to={AppRoute.FAVORITES}>
+              <div className="user-block__avatar">
+                <img src={`${URL.DOMEN}${avatar}`} alt="User avatar" width="63" height="63" />
+              </div>
           </Link>
           : <Link to={AppRoute.LOGIN} className="user-block__link">Sign in</Link>
         }

@@ -11,6 +11,9 @@ interface Props {
 
 const MoviesList: React.FunctionComponent<Props> = (props: Props) => {
   const {movies, onCardHover, onCardLeave, playingPlayer} = props;
+  if (movies.length === 0) {
+    return null;
+  }
   return (
     <div className="catalog__movies-list">
       {movies.map((it) => {

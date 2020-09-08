@@ -23,17 +23,20 @@ const onRequireAuth = () => {
 const api = createAPI(onRequireAuth);
 
 const store = createStore(
-    reducer,
-    composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api))
+  reducer,
+  composeWithDevTools(
+    applyMiddleware(thunk.withExtraArgument(api))
     )
-);
+  );
 
-store.dispatch(DataOperation.loadMovies());
-store.dispatch(UserOperation.checkLogin());
+    store.dispatch(DataOperation.loadMovies());
+    store.dispatch(UserOperation.checkLogin());
+    store.dispatch(DataOperation.loadPromoMovie());
 
-ReactDOM.render(<Provider store={store}>
+    ReactDOM.render(<Provider store={store}>
   <Router history={history}>
     <App />
   </Router>
 </Provider>, document.getElementById(`root`));
+
+export {history};

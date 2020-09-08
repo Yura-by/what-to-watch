@@ -12,6 +12,7 @@ import Player from '../player/player';
 import SignIn from '../sign-in/sign-in';
 import AddReview from '../add-review/add-review';
 import PrivateRoute from '../private-route/private-route';
+import Favorites from '../favorites/favorites';
 
 import withLogIn from '../../hocs/with-log-in/with-log-in';
 import withVideoPlayer from '../../hocs/with-video-player/with-video-player';
@@ -64,6 +65,11 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
           path={`${AppRoute.ADD_COMMENT}:id`}
           exact={true}
           component={AddReviewWrapped}
+        />
+        <PrivateRoute
+          path={AppRoute.FAVORITES}
+          exact={true}
+          component={Favorites}
         />
 
       </Switch>

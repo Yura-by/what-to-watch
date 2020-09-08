@@ -1,7 +1,6 @@
 import {Store} from '../../types';
 import {NameSpace} from '../name-space';
 import { createSelector } from 'reselect';
-import { number } from 'prop-types';
 
 const getAllMovies = (state: Store) => {
   return state[NameSpace.DATA].allMovies;
@@ -34,4 +33,12 @@ const getRandomMovie = createSelector(
   }
 );
 
-export {getAllMovies, getReviews, getIsSendingComment, getIsBadSentComment, geIsCommentSent, getRandomMovie};
+const getPromoMovie = (state: Store) => {
+  return state[NameSpace.DATA].promoMovie;
+};
+
+const getFavoriteMovies = (state: Store) => {
+  return state[NameSpace.DATA].favoriteMovies;
+};
+
+export {getAllMovies, getReviews, getIsSendingComment, getIsBadSentComment, geIsCommentSent, getRandomMovie, getPromoMovie, getFavoriteMovies};

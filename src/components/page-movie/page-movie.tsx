@@ -39,6 +39,7 @@ const PageMovie: React.FunctionComponent<Props> = (props: Props) => {
 
               <MoviCardButtons
                 movieId={movie.id}
+                isFavorite={movie.isFavorite}
               >
                 <Link to={`${AppRoute.ADD_COMMENT}${movie.id}`} className="btn movie-card__button">Add review</Link>
               </MoviCardButtons>

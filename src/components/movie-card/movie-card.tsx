@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Movie} from '../../types';
 import {connect} from 'react-redux';
-import {getRandomMovie} from '../../reducer/data/selectors';
+import {getPromoMovie} from '../../reducer/data/selectors';
 
 import Header from '../header/header';
 import MoviCardButtons from '../movie-card-buttons/movie-card-buttons';
@@ -50,7 +50,7 @@ const MovieCard: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapStateToProps = (state: Store) => {
   return {
-    movie: getRandomMovie(state),
+    movie: getPromoMovie(state),
   };
 };
 
