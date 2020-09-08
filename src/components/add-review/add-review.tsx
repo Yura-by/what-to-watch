@@ -53,7 +53,9 @@ const AddReview: React.FunctionComponent<Props> = (props: Props) => {
 
           <div className="user-block">
             <div className="user-block__avatar">
-              <img src={`${URL.DOMEN}${avatar}`} alt="User avatar" width="63" height="63" />
+              <Link to={AppRoute.FAVORITES}>
+                <img src={`${URL.DOMEN}${avatar}`} alt="User avatar" width="63" height="63" />
+              </Link>
             </div>
           </div>
         </header>

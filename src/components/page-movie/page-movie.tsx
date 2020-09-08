@@ -1,21 +1,28 @@
 import * as React from 'react';
-import {Movie} from '../../types';
+import {Movie, Store} from '../../types';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {connect} from 'react-redux';
+import {getAllMovies} from '../../reducer/data/selectors';
 
 import Header from '../header/header';
-import MoviCardButtons from '../movie-card-buttons/movie-card-buttons';
+import MovieCardButtons from '../movie-card-buttons/movie-card-buttons';
 import MovieCardDesc from '../movie-card-desc/movie-card-desc';
 import PageContent from '../page-content/page-content';
 import CatalogLikeThis from '../catalog-like-this/catalog-like-this';
 
+import withAddFavorites from '../../hocs/with-add-favorites/with-add-favorites';
+
 interface Props {
   movies: Movie[];
   match: any;
+  history: any;
 }
 
+const WithAddFavorites = withAddFavorites(MovieCardButtons);
+
 const PageMovie: React.FunctionComponent<Props> = (props: Props) => {
-  const {movies, match} = props;
+  const {movies, match, history} = props;
   const movie = movies.find((it) => it.id === Number(match.params.id));
   return (
     <React.Fragment>
@@ -37,12 +44,13 @@ const PageMovie: React.FunctionComponent<Props> = (props: Props) => {
                 <span className="movie-card__year">{movie.released}</span>
               </p>
 
-              <MoviCardButtons
+              <WithAddFavorites
+                history={history}
                 movieId={movie.id}
                 isFavorite={movie.isFavorite}
               >
                 <Link to={`${AppRoute.ADD_COMMENT}${movie.id}`} className="btn movie-card__button">Add review</Link>
-              </MoviCardButtons>
+              </WithAddFavorites>
 
             </div>
           </div>
@@ -66,4 +74,10 @@ const PageMovie: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-export default PageMovie;
+const mapStateToProps = (state: Store) => {
+  return {
+    movies: getAllMovies(state),
+  };
+};
+
+export default connect(mapStateToProps)(PageMovie);

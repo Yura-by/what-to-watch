@@ -4,15 +4,19 @@ import {connect} from 'react-redux';
 import {getPromoMovie} from '../../reducer/data/selectors';
 
 import Header from '../header/header';
-import MoviCardButtons from '../movie-card-buttons/movie-card-buttons';
+import MovieCardButtons from '../movie-card-buttons/movie-card-buttons';
+import withAddFavorites from '../../hocs/with-add-favorites/with-add-favorites';
 import {Store} from '../../types';
 
 interface Props {
   movie: Movie;
+  history: any;
 }
 
+const WithAddFavorites = withAddFavorites(MovieCardButtons)
+
 const MovieCard: React.FunctionComponent<Props> = (props: Props) => {
-  const {movie} = props;
+  const {movie, history} = props;
   if (movie === null) {
     return null;
   }
@@ -38,8 +42,11 @@ const MovieCard: React.FunctionComponent<Props> = (props: Props) => {
               <span className="movie-card__genre">{movie.genre}</span>
               <span className="movie-card__year">{movie.released}</span>
             </p>
-            <MoviCardButtons
+            <WithAddFavorites
+              history={history}
               movieId={movie.id}
+              isFavorite={movie.isFavorite}
+              isPromo={true}
             />
           </div>
         </div>

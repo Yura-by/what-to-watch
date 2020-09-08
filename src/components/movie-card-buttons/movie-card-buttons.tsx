@@ -7,10 +7,12 @@ interface Props {
   children?: React.ReactNode;
   movieId: number;
   isFavorite: boolean;
+  isMyListDisabled: boolean;
+  onFavoriteClick: (isFavorite: boolean) => void;
 }
 
 const MoviCardButtons: React.FunctionComponent<Props> = (props: Props) => {
-  const {movieId, isFavorite} = props;
+  const {movieId, isFavorite, isMyListDisabled, onFavoriteClick} = props;
   return (
     <div className="movie-card__buttons">
       <Link to={`${AppRoute.PLAYER}${movieId}`} className="btn btn--play movie-card__button">
@@ -19,7 +21,12 @@ const MoviCardButtons: React.FunctionComponent<Props> = (props: Props) => {
         </svg>
         <span>Play</span>
       </Link>
-      <button type="button" className="btn btn--list movie-card__button">
+      <button
+        type="button"
+        className="btn btn--list movie-card__button"
+        disabled={isMyListDisabled ? true : false}
+        onClick={() => onFavoriteClick(!isFavorite)}
+      >
         <svg viewBox="0 0 19 20" width="19" height="20">
           <use xlinkHref={isFavorite ? `#in-list` : `#add`}></use>
         </svg>

@@ -41,4 +41,8 @@ const getFavoriteMovies = (state: Store) => {
   return state[NameSpace.DATA].favoriteMovies;
 };
 
-export {getAllMovies, getReviews, getIsSendingComment, getIsBadSentComment, geIsCommentSent, getRandomMovie, getPromoMovie, getFavoriteMovies};
+const getIsFavoriteSending = (state: Store) => {
+  return state[NameSpace.DATA].isFavoriteSending;
+};
+
+export {getAllMovies, getReviews, getIsSendingComment, getIsBadSentComment, geIsCommentSent, getRandomMovie, getPromoMovie, getFavoriteMovies, getIsFavoriteSending};

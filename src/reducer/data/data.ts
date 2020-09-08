@@ -1,5 +1,6 @@
 import {Movie, Action, Comment, SendingComment} from '../../types';
 import MovieAdapter from '../../adapters/movie';
+import {NameSpace} from '../name-space';
 
 enum ActionType {
   SET_MOVIES = `SET_MOVIES`,
@@ -9,6 +10,9 @@ enum ActionType {
   SET_IS_COMMENT_SENT = `SET_IS_COMMENT_SENT`,
   SET_PROMO_MOVIE = `SET_PROMO_MOVIE`,
   SET_FAVORITE_MOVIES = `SET_FAVORITE_MOVIES`,
+  SET_MOVIE = `SET_MOVIE`,
+  SET_FAVORITE_SENDING = `SET_FAVORITE_SENDING`,
+  SET_FAVORITE_PROMO = `SET_FAVORITE_PROMO`,
 }
 
 interface State {
@@ -18,7 +22,8 @@ interface State {
   isSendingComment: boolean;
   isBadSentComment: boolean;
   isCommentSent: boolean;
-  favoriteMovies: Movie[]
+  favoriteMovies: Movie[];
+  isFavoriteSending: boolean;
 }
 
 const initialState: State = {
@@ -29,11 +34,12 @@ const initialState: State = {
   isBadSentComment: false,
   isCommentSent: false,
   favoriteMovies: [],
+  isFavoriteSending: false,
 };
 
 const ActionCreator = {
 
-  setProvoMovie: (movie: Movie) => {
+  setPromoMovie: (movie: Movie) => {
     return {
       type: ActionType.SET_PROMO_MOVIE,
       payload: movie,
@@ -80,6 +86,25 @@ const ActionCreator = {
       type: ActionType.SET_IS_COMMENT_SENT,
       payload: isSent,
     }
+  },
+
+  setMovie: (movie: Movie) => ({
+    type: ActionType.SET_MOVIE,
+    payload: movie,
+  }),
+
+  setFavoriteSending: (isSanding: boolean) => {
+    return {
+      type: ActionType.SET_FAVORITE_SENDING,
+      payload: isSanding,
+    };
+  },
+
+  toggleFavoriePromoMovie: (isFavorite: boolean) => {
+    return {
+      type: ActionType.SET_FAVORITE_PROMO,
+      payload: isFavorite
+    };
   }
 };
 
@@ -104,6 +129,19 @@ const Operation = {
       })
   },
 
+  setFavorite: (id: number, isFavorite: boolean, isPromo: boolean) => (dispatch, getState, api) => {
+    if (isPromo) {
+      return dispatch(ActionCreator.toggleFavoriePromoMovie(isFavorite));
+    }
+    dispatch(ActionCreator.setFavoriteSending(true));
+    const isFavoriteMovie: number = isFavorite ? 1 : 0;
+    return api.post(`/favorite/${id}/${isFavoriteMovie}`)
+      .then((response) => {
+        dispatch(ActionCreator.setMovie(MovieAdapter.getMovie(response.data)));
+        dispatch(ActionCreator.setFavoriteSending(false));
+      })
+  },
+
   sendComment: (movieId: number, data: SendingComment) => (dispatch, getState, api) => {
     dispatch(ActionCreator.setIsSendingComment(true));
     return api.post(`/comments/${movieId}`, data)
@@ -121,11 +159,14 @@ const Operation = {
   },
 
   loadPromoMovie: () => (dispatch, getState, api) => {
+    dispatch(ActionCreator.setFavoriteSending(true));
     return api.get(`/films/promo`)
       .then((response) => {
-        dispatch(ActionCreator.setProvoMovie(MovieAdapter.getMovie(response.data)));
+        dispatch(ActionCreator.setFavoriteSending(false));
+        dispatch(ActionCreator.setPromoMovie(MovieAdapter.getMovie(response.data)));
+
       });
-  }
+  },
 };
 
 const reducer = (state: State = initialState, action: Action) => {
@@ -158,6 +199,25 @@ const reducer = (state: State = initialState, action: Action) => {
     case ActionType.SET_FAVORITE_MOVIES:
       return Object.assign({}, state, {
         favoriteMovies: action.payload
+      });
+    case ActionType.SET_MOVIE:
+      const movie: Movie = action.payload;
+      const movies: Movie[] = state.allMovies;
+      const index: number = movies.findIndex((it) => it.id === movie.id);
+      const newMovies = [].concat(movies.slice(0, index), movie, movies.slice(index + 1));
+      return Object.assign({}, state, {
+        allMovies: newMovies,
+      });
+    case ActionType.SET_FAVORITE_SENDING:
+      return Object.assign({}, state, {
+        isFavoriteSending: action.payload
+      })
+    case ActionType.SET_FAVORITE_PROMO:
+      const copyPromoMovie = Object.assign({}, state.promoMovie, {
+        isFavorite: action.payload,
+      });
+      return Object.assign({}, state, {
+        promoMovie: copyPromoMovie,
       });
   }
   return state;

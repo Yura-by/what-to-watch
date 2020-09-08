@@ -35,9 +35,7 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
         <Route
           path={AppRoute.ROOT}
           exact
-          render={() => {
-            return <PageMain />
-          }}
+          component={PageMain}
         />
         <Route
           path={AppRoute.LOGIN}
@@ -47,14 +45,7 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
         <Route
           path={`${AppRoute.MOVIE}:id`}
           exact
-          render={(routersProps) => {
-            return (
-              <PageMovie
-                {...routersProps}
-                movies={props.movies}
-              />
-            );
-          }}
+          component={PageMovie}
         />
         <Route
           path={`${AppRoute.PLAYER}:id`}

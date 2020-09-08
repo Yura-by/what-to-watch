@@ -4,7 +4,7 @@ import Logo from '../logo/logo';
 import {getUserAvatar} from '../../reducer/user/selectors';
 import {connect} from 'react-redux';
 import {URL} from '../../const';
-import {Operation as DataOperation, Operation} from '../../reducer/data/data';
+import {Operation as DataOperation, ActionCreator as DataActionCreator} from '../../reducer/data/data';
 
 import {getFavoriteMovies} from '../../reducer/data/selectors';
 
@@ -17,6 +17,7 @@ interface Props {
   avatar: string;
   movies: Movie[];
   onComponentDidMount: () => void;
+  onComponentWillUnmount: () => void;
 }
 
 const MoviesListWrapped = withPlayingMovie(MoviesList);
@@ -52,6 +53,10 @@ class Favorites extends React.PureComponent<Props, null> {
   componentDidMount() {
     this.props.onComponentDidMount();
   }
+
+  componentWillUnmount() {
+    this.props.onComponentWillUnmount();
+  }
 }
 
 const mapStateToProps = (state: Store) => {
@@ -65,6 +70,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onComponentDidMount: () => {
       dispatch(DataOperation.loadFavorites());
+    },
+    onComponentWillUnmount: () => {
+      dispatch(DataActionCreator.setFavoriteMovies([]));
     }
   };
 };
