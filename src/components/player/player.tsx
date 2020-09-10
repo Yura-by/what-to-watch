@@ -47,7 +47,7 @@ const Player: React.FunctionComponent<Props> = (props: Props) => {
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value={percentsVideo} max="100"
+            <progress className="player__progress" value={percentsVideo || 0} max="100"
               ref={progressRef}
               onClick={onProgressClick}
             ></progress>

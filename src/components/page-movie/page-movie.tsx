@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Movie, Store} from '../../types';
-import {Link} from 'react-router-dom';
+import {Link, RouteComponentProps} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {connect} from 'react-redux';
 import {getAllMovies} from '../../reducer/data/selectors';
@@ -13,10 +13,12 @@ import CatalogLikeThis from '../catalog-like-this/catalog-like-this';
 
 import withAddFavorites from '../../hocs/with-add-favorites/with-add-favorites';
 
-interface Props {
+interface MatchParams {
+  id: string;
+}
+
+interface Props extends RouteComponentProps<MatchParams> {
   movies: Movie[];
-  match: any;
-  history: any;
 }
 
 const WithAddFavorites = withAddFavorites(MovieCardButtons);
@@ -24,6 +26,9 @@ const WithAddFavorites = withAddFavorites(MovieCardButtons);
 const PageMovie: React.FunctionComponent<Props> = (props: Props) => {
   const {movies, match, history} = props;
   const movie = movies.find((it) => it.id === Number(match.params.id));
+  if (!movie) {
+    return null;
+  }
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">

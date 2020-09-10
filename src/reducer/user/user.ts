@@ -1,4 +1,6 @@
 import User from '../../adapters/user';
+import {history} from '../../index';
+import {AppRoute} from '../../const'
 
 enum ActionType {
   SET_REQUIRE_AUTHORIZATION = `SET_REQUIRE_AUTHORIZATION`,
@@ -69,6 +71,7 @@ const Operation = {
         dispatch(ActionCreator.setUserData(new User(response.data)));
         dispatch(ActionCreator.setRequireAuthorization(false));
         dispatch(ActionCreator.setRequestFlag(false));
+        history.push(AppRoute.ROOT);
       })
       .catch((err) => {
         if (err.response.status === 400) {

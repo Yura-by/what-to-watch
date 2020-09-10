@@ -23,7 +23,6 @@ export enum URL {
 export enum AppRoute {
   ROOT = `/`,
   LOGIN = `/login`,
-  MAIN = `/main`,
   ADD_COMMENT = `/add-comment/`,
   MOVIE = `/movie/`,
   PLAYER = `/player/`,

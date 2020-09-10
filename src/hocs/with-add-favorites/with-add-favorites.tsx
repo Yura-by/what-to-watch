@@ -9,12 +9,13 @@ import {Operation as DataOperation} from '../../reducer/data/data';
 import {getRequireAuthorization} from '../../reducer/user/selectors';
 import {getIsFavoriteSending} from '../../reducer/data/selectors';
 
+import {History} from '../../index';
 
 interface Props {
   isRequireAuthorization: boolean;
   isFavoriteSending: boolean;
   isFavorite: boolean;
-  history: any;
+  history: History;
   movieId: number;
   onMyListClick: (id: number, isFavorite: boolean, isPromo: boolean) => void;
   isPromo?: boolean;
@@ -68,10 +69,10 @@ const mapStateToProps = (state: Store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onMyListClick: (id: number, isFavorite: boolean, isPromo: boolean = false) => {
+    onMyListClick: (id: number, isFavorite: boolean, isPromo: boolean) => {
       dispatch(DataOperation.setFavorite(id, isFavorite, isPromo));
-    }
-  }
-}
+    },
+  };
+};
 
 export default withAddFavorites;

@@ -2,18 +2,18 @@ import * as React from 'react';
 import {Movie} from '../../types';
 import {connect} from 'react-redux';
 import {getPromoMovie} from '../../reducer/data/selectors';
+import {RouteComponentProps} from 'react-router-dom';
 
 import Header from '../header/header';
 import MovieCardButtons from '../movie-card-buttons/movie-card-buttons';
 import withAddFavorites from '../../hocs/with-add-favorites/with-add-favorites';
 import {Store} from '../../types';
 
-interface Props {
+interface Props extends RouteComponentProps {
   movie: Movie;
-  history: any;
 }
 
-const WithAddFavorites = withAddFavorites(MovieCardButtons)
+const WithAddFavorites = withAddFavorites(MovieCardButtons);
 
 const MovieCard: React.FunctionComponent<Props> = (props: Props) => {
   const {movie, history} = props;

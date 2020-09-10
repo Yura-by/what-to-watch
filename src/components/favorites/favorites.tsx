@@ -63,7 +63,7 @@ const mapStateToProps = (state: Store) => {
   return {
     avatar: getUserAvatar(state),
     movies: getFavoriteMovies(state),
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

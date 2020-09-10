@@ -5,20 +5,24 @@ import {connect} from 'react-redux';
 import {Operation, ActionCreator} from '../../reducer/data/data';
 import {getIsSendingComment, getIsBadSentComment, geIsCommentSent} from '../../reducer/data/selectors';
 import {getAllMovies} from '../../reducer/data/selectors';
+import {RouteComponentProps} from 'react-router-dom';
 
 interface State {
   rating: number;
   comment: string;
 }
 
-interface Props {
+interface MatchParams {
+  id: string;
+}
+
+interface Props extends RouteComponentProps<MatchParams> {
   movies: Movie[];
   onReviewClear: () => void;
   isSendingComment: boolean;
   isBadSentComment: boolean;
   isCommentSent: boolean;
   onWithCommentsUnmount: () => void;
-  match: any;
 }
 
 interface InjectingProps {

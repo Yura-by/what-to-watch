@@ -8,10 +8,10 @@ import {AppRoute} from '../../const';
 import {getRequireAuthorization} from '../../reducer/user/selectors';
 
 interface Props {
-  component: any,
-  isRequireAuthorization: boolean,
-  exact: boolean,
-  path: string,
+  component: React.ElementType;
+  isRequireAuthorization: boolean;
+  exact: boolean;
+  path: string;
 }
 
 const PrivateRoute: React.FunctionComponent<Props> = ({component: Component, isRequireAuthorization, ...rest}: Props) => {

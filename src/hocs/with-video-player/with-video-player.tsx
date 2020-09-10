@@ -1,14 +1,18 @@
 import * as React from 'react';
 import {Movie, Store} from '../../types';
 import {connect} from 'react-redux';
+import {RouteComponentProps} from 'react-router-dom';
 
 import {getAllMovies} from '../../reducer/data/selectors';
 
 import Video from '../../components/video/video';
 
-interface Props {
+interface MatchParams {
+  id: string;
+}
+
+interface Props extends RouteComponentProps<MatchParams> {
   movies: Movie[];
-  match: any;
 }
 
 interface State {
@@ -44,10 +48,14 @@ const withVideoPlayer = (Component) => {
     render() {
       const {movies, match} = this.props;
       const movie = movies.find((it) => it.id === Number(match.params.id));
-      const {videoLink, backgroundImage} = movie;
+      let videoLink = ``;
+      let backgroundImage = ``;
+      if (movie) {
+        videoLink = movie.videoLink;
+        backgroundImage = movie.backgroundImage;
+      }
       return (
         <Component
-          // onExitPlayer={onExitPlayer}
           percentsVideo={this.state.percentsVideo}
           progressRef={this._progressRef}
           onProgressClick={this._progressClickHandler}

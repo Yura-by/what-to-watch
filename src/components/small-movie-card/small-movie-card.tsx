@@ -14,19 +14,19 @@ interface Props {
 const SmallMovieCard: React.FunctionComponent<Props> = (props: Props) => {
   const {movie, onCardHover, onCardLeave, isPlayVideo} = props;
   return (
-      <article
-        className="small-movie-card catalog__movies-card"
-        onMouseEnter={() => {
-          onCardHover(movie.id);
-        }}
-        onMouseLeave={onCardLeave}
-      >
-        <div className="small-movie-card__image">
-          {isPlayVideo ? <video src={movie.previewVideoLink} width="280" height="175" poster={movie.posterImage} muted autoPlay></video>
-            : <img src={movie.previewImage} alt={movie.name} width="280" height="175" />}
+    <article
+      className="small-movie-card catalog__movies-card"
+      onMouseEnter={() => {
+        onCardHover(movie.id);
+      }}
+      onMouseLeave={onCardLeave}
+    >
+      <div className="small-movie-card__image">
+        {isPlayVideo ? <video src={movie.previewVideoLink} width="280" height="175" poster={movie.posterImage} muted autoPlay></video>
+          : <img src={movie.previewImage} alt={movie.name} width="280" height="175" />}
 
-        </div>
-        <h3 className="small-movie-card__title">
+      </div>
+      <h3 className="small-movie-card__title">
         <Link
           to={`${AppRoute.MOVIE}${movie.id}`}
           className="small-movie-card__link"
@@ -34,8 +34,8 @@ const SmallMovieCard: React.FunctionComponent<Props> = (props: Props) => {
           {movie.name}
         </Link>
 
-        </h3>
-      </article>
+      </h3>
+    </article>
   );
 };
 

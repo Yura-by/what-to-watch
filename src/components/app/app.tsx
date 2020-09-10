@@ -1,10 +1,6 @@
 import * as React from 'react';
-import {Movie, Store} from '../../types';
-import {connect} from 'react-redux';
 import {Switch, Route} from 'react-router-dom';
 import {AppRoute} from '../../const';
-
-import {getAllMovies} from '../../reducer/data/selectors';
 
 import PageMain from '../page-main/page-main';
 import PageMovie from '../page-movie/page-movie';
@@ -24,53 +20,42 @@ const SignInWrapped = withLogIn(SignIn);
 
 const AddReviewWrapped = withComment(AddReview);
 
+const App = () => {
+  return (
+    <Switch>
+      <Route
+        path={AppRoute.ROOT}
+        exact
+        component={PageMain}
+      />
+      <Route
+        path={AppRoute.LOGIN}
+        exact
+        component={SignInWrapped}
+      />
+      <Route
+        path={`${AppRoute.MOVIE}:id`}
+        exact
+        component={PageMovie}
+      />
+      <Route
+        path={`${AppRoute.PLAYER}:id`}
+        exact
+        component={PlayerWrapped}
+      />
+      <PrivateRoute
+        path={`${AppRoute.ADD_COMMENT}:id`}
+        exact={true}
+        component={AddReviewWrapped}
+      />
+      <PrivateRoute
+        path={AppRoute.FAVORITES}
+        exact={true}
+        component={Favorites}
+      />
 
-interface Props {
-  movies: Movie[];
-}
-
-const App: React.FunctionComponent<Props> = (props: Props) => {
-    return (
-      <Switch>
-        <Route
-          path={AppRoute.ROOT}
-          exact
-          component={PageMain}
-        />
-        <Route
-          path={AppRoute.LOGIN}
-          exact
-          component={SignInWrapped}
-        />
-        <Route
-          path={`${AppRoute.MOVIE}:id`}
-          exact
-          component={PageMovie}
-        />
-        <Route
-          path={`${AppRoute.PLAYER}:id`}
-          exact
-          component={PlayerWrapped}
-        />
-        <PrivateRoute
-          path={`${AppRoute.ADD_COMMENT}:id`}
-          exact={true}
-          component={AddReviewWrapped}
-        />
-        <PrivateRoute
-          path={AppRoute.FAVORITES}
-          exact={true}
-          component={Favorites}
-        />
-
-      </Switch>
-    );
+    </Switch>
+  );
 };
 
-const mapStateToProps = (state: Store) => {
-  return {
-    movies: getAllMovies(state),
-  };
-};
-
-export default connect(mapStateToProps)(App);
+export default App;

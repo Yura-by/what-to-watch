@@ -32,7 +32,7 @@ const mapStateToProps = (state: Store) => {
   return {
     movies: getLikeThisMovies(state)
   };
-}
+};
 
 
 export default connect(mapStateToProps)(Catalog);

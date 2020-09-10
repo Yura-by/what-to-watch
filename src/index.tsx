@@ -17,23 +17,25 @@ import App from './components/app/app';
 
 const history = createBrowserHistory();
 
+export type History = typeof history;
+
 const onRequireAuth = () => {
   store.dispatch(() => history.push(AppRoute.LOGIN));
 };
 const api = createAPI(onRequireAuth);
 
 const store = createStore(
-  reducer,
-  composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api))
+    reducer,
+    composeWithDevTools(
+        applyMiddleware(thunk.withExtraArgument(api))
     )
-  );
+);
 
-    store.dispatch(DataOperation.loadMovies());
-    store.dispatch(UserOperation.checkLogin());
-    store.dispatch(DataOperation.loadPromoMovie());
+store.dispatch(DataOperation.loadMovies());
+store.dispatch(UserOperation.checkLogin());
+store.dispatch(DataOperation.loadPromoMovie());
 
-    ReactDOM.render(<Provider store={store}>
+ReactDOM.render(<Provider store={store}>
   <Router history={history}>
     <App />
   </Router>
